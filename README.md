@@ -1,2 +1,2 @@
 # AuthShibboleth
-AuthShiboleth for NetCommons3
+AuthShibboleth for NetCommons3
