@@ -1,0 +1,36 @@
+{
+    "name": "netcommons/auth-shiboleth",
+    "description": "AuthShiboleth for NetCommons Plugin",
+    "homepage": "http://www.netcommons.org/",
+    "extra": {
+        "installer-paths": {
+            "app/Plugin/{$name}": ["type:cakephp-plugin"]
+        }
+    },
+    "require": {
+        "cakedc/migrations":           "~2.2",
+        "netcommons/mails":            "@dev",
+        "netcommons/net-commons":      "@dev",
+        "netcommons/site-manager":     "@dev",
+        "netcommons/user-attributes":  "@dev",
+        "netcommons/users":            "@dev"
+    },
+    "license": "NetCommons License",
+    "authors": [
+        {
+          "name": "Mitsuru Mutaguchi(OpenSource WorkShop)",
+          "email": "mutaguchi@opensource-workshop.jp",
+          "homepage": "https://opensource-workshop.jp/",
+          "role": "Developer"
+        },
+        {
+            "name": "NetCommons Community",
+            "homepage": "http://www.netcommons.org"
+        }
+    ],
+    "type":        "cakephp-plugin",
+    "keywords":    ["cakephp", "auth", "shiboleth"],
+    "config": {
+        "vendor-dir": "vendors"
+    }
+}
