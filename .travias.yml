@@ -1,0 +1,40 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
+sudo: false
+
+env:
+  matrix:
+    - NETCOMMONS_VERSION=master DB=mysql
+  global:
+    - secure: "P0BywHHCvGEHVd2mDTYgvwvlED4sAVVfa1aRnZsSbBCH4kK4BXTLqi9Is8GJK0D1B6eFogzAsIXqcO2XtQ/FrjURYDCrGSfoVJAdkt2HDuYVwiInHzlofLqU/Asy7//7qh7kSNJ39VnRsTHc+uLK1PwbVFvcP5Kk5vPMYMAd923ZdErKdCGfhfPrKzWZ/g5kcvE2exwAX7JR4xr5+VKjsHpUBWWDHrBKvgy3KRsJN+M48nNYoVXNDZ0oY6e3bJlvHxhMRQvRTrhs3uK9EAHld7FtVeofI9AdGgFFiqbewWoEhquQEJMMTwY0foRTHeDKe/AzBPQ2oRkebhtFYjTV58v1ccxoUFYSVTwbJ/6R8syjL18fXYKBtAjfK8i68bPBKMrTNqK7k405cMi59r0lu6w0O2VUTQNL/kFyzngUHRjCbAfYsxwOIz50XdQMT0z8LOS0BW4TORSVnOX7QlF7TudrKVUI7lHvebLowQEl+e/4l4HGnq1vxYcDbJLG+IKtOehpyHWJLCrOGzD0bnRlMTxxmTzeh8xdokV+5h9AVOgwQz295DH2f65MQptaGM9kICw2DO/kNDf2KBRkDEZl38HpfTm8iHzlWJ+JDcu/SHIeHlgWH41kEvXD1l1/C1217V5Hdy0MNnn5qvJXjM9yzELnVZdFIR5ko5UKvU7W0QI="
+    - GIT_COMMITTER_NAME=akagane99
+    - GIT_COMMITTER_EMAIL=akagane99@gmail.com
+    - GIT_AUTHOR_NAME=akagane99
+    - GIT_AUTHOR_EMAIL=akagane99@gmail.com
+
+before_script:
+  - export NETCOMMONS_BUILD_DIR=`dirname $TRAVIS_BUILD_DIR`/NetCommons3
+  - git clone git://github.com/NetCommons3/NetCommons3 $NETCOMMONS_BUILD_DIR
+  - cd $NETCOMMONS_BUILD_DIR
+  - git checkout $NETCOMMONS_VERSION
+  - . tools/build/plugins/cakephp/travis/pre.sh
+
+script:
+  - travis_wait . tools/build/plugins/cakephp/travis/main.sh
+
+after_script:
+  - . tools/build/plugins/cakephp/travis/post.sh
+
+notifications:
+  email:
+    recipients:
+      - netcommons3@googlegroups.com
+    on_success: never  # default: change
+    on_failure: always # default: always
