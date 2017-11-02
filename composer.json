@@ -1,6 +1,6 @@
 {
-    "name": "netcommons/auth-shiboleth",
-    "description": "AuthShiboleth for NetCommons Plugin",
+    "name": "netcommons/auth-shibboleth",
+    "description": "AuthShibboleth for NetCommons Plugin",
     "homepage": "http://www.netcommons.org/",
     "extra": {
         "installer-paths": {
@@ -29,7 +29,7 @@
         }
     ],
     "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "auth", "shiboleth"],
+    "keywords":    ["cakephp", "auth", "shibboleth"],
     "config": {
         "vendor-dir": "vendors"
     }
