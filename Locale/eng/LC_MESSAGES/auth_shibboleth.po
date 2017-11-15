@@ -15,3 +15,6 @@ msgstr ""
 
 msgid "Auth Shibboleth"
 msgstr ""
+
+msgid "Stay logged in"
+msgstr ""

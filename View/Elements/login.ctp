@@ -9,4 +9,4 @@
  */
 ?>
 
-<?php echo $this->element('AuthShibboleth.ds'); ?>
+<?php echo $this->element('AuthShibboleth.ds');

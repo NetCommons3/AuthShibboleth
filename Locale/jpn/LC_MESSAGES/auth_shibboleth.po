@@ -15,3 +15,6 @@ msgstr ""
 
 msgid "Auth Shibboleth"
 msgstr "Shibboleth認証"
+
+msgid "Stay logged in"
+msgstr "ログインしたままにする"
