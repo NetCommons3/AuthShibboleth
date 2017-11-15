@@ -1,0 +1,17 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright 2014, NetCommons Project
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>\n"
+"Language-Team: NetCommons Community\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Auth Shibboleth"
+msgstr "Shibboleth認証"
