@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   # /secure/ is Shibboleth
+   # Shibboleth need DocumentRoot /secure/ and /Shibboleth.sso/
+   RewriteCond    %{REQUEST_URI} !(^/secure/)
+   RewriteCond    %{REQUEST_URI} !(^/Shibboleth.sso/)
+   RewriteRule    ^$ app/webroot/    [L]
+   RewriteCond    %{REQUEST_URI} !(^/secure/)
+   RewriteCond    %{REQUEST_URI} !(^/Shibboleth.sso/)
+   RewriteRule    (.*) app/webroot/$1 [L]
+</IfModule>

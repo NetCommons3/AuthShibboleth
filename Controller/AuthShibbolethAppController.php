@@ -19,6 +19,7 @@ App::uses('AuthController', 'Auth.Controller');
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Controller
+ * @property AuthShibbolethComponent $AuthShibboleth
  */
 class AuthShibbolethAppController extends AuthController {
 
