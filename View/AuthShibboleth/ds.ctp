@@ -9,6 +9,16 @@
  */
 ?>
 
-<?php echo $this->element('AuthShibboleth.ds', array(
+<h2>
+	<?php echo __d('auth_shibboleth', '他の機関のIdPによるShibbolethログイン'); ?>
+</h2>
+
+<hr>
+
+<?php /* DS説明 */ ?>
+<?php echo $this->element('AuthShibboleth.AuthShibboleth/description'); ?>
+
+<?php /* DS */ ?>
+<?php echo $this->element('AuthShibboleth.AuthShibboleth/ds', array(
 	'wayfBorderColor' => '#ddd',	// 枠線あり
 ));

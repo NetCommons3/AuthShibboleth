@@ -1,6 +1,7 @@
 <?php
 /**
  * Auth Shibboleth
+ * これがある事で直接IdPに接続可能になる
  *
  * @author Noriko Arai,Ryuji Masukawa
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>

@@ -56,7 +56,15 @@ var wayf_sp_handlerURL = "https://e-rad.local:4437/Shibboleth.sso";
 // var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome";
 //var wayf_return_url = "https://my-app.switch.ch/secure/index.php";
 //var wayf_return_url = "https://e-rad.local:4437/secure/shib.php";
-var wayf_return_url = "https://e-rad.local:4437/secure/index.php";
+//var wayf_return_url = "https://e-rad.local:4437/secure/index.php";
+// DSからユーザ紐づけ画面に直接遷移する場合は下記を設定
+// またサイトのapache.confに以下を追記
+//    <Location /auth_shibboleth/auth_shibboleth/mapping>
+//    AuthType shibboleth
+//    ShibRequestSetting requireSession 1
+//    require shib-session
+//    </Location>
+var wayf_return_url = "https://e-rad.local:4437/auth_shibboleth/auth_shibboleth/mapping";
 
 
 //////////////////// RECOMMENDED SETTINGS ////////////////////
