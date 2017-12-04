@@ -48,11 +48,9 @@ class AuthShibboleth extends CakeMigration {
 				'idp_users' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'key' => 'primary', 'comment' => 'ID'),
 					'user_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => false, 'comment' => 'ユーザID'),
-					'identity_data_provider_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false, 'comment' => 'IdPマスタID'),
 					'idp_userid' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => 'IdPによる個人識別番号', 'charset' => 'utf8'),
 					'is_shib_eptid' => array('type' => 'boolean', 'null' => true, 'default' => null, 'comment' => 'ePTID(eduPersonTargetedID)かどうか | null：Shibboleth以外  0：ePPN(eduPersonPrincipalName)  1：ePTID(eduPersonTargetedID)'),
-					'pass_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '仮登録から本登録(有効)にする際に使用するパスキー（ID連携管理で使用）', 'charset' => 'utf8'),
-					'status' => array('type' => 'integer', 'null' => true, 'default' => '2', 'length' => 4, 'unsigned' => false, 'comment' => '状態 | 0：無効  1：仮登録（ID連携管理で使用する）  2：有効'),
+					'status' => array('type' => 'integer', 'null' => true, 'default' => '2', 'length' => 4, 'unsigned' => false, 'comment' => '状態 | 0：無効  2：有効'),
 					'scope' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 2000, 'collate' => 'utf8_general_ci', 'comment' => 'スコープ', 'charset' => 'utf8'),
 					'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => '作成日時'),
 					'created_user' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false, 'comment' => '作成者'),

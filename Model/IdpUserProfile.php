@@ -41,25 +41,18 @@ class IdpUserProfile extends AuthShibbolethAppModel {
  */
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge($this->validate, array(
-			'frame_key' => array(
+			'idp_userid' => array(
 				'notBlank' => array(
 					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
 			),
-			'display_order' => array(
-				'notBlank' => array(
-					'rule' => array('notBlank'),
+			'email' => array(
+				'email' => array(
+					'rule' => array('email', false, null),
 					'message' => __d('net_commons', 'Invalid request.'),
-					'required' => true,		// required 効かず、default値が設定された
-				),
-			),
-			'display_number' => array(
-				'numeric' => array(
-					'rule' => array('numeric'),
-					'message' => __d('net_commons', 'Invalid request.'),
-					'required' => true,		// required 効かず、default値が設定された
+					'allowEmpty' => true,
 				),
 			),
 		));
@@ -84,39 +77,39 @@ class IdpUserProfile extends AuthShibbolethAppModel {
 	//		),
 	//	);
 
+	///**
+	// * VideoFrameSettingデータ取得
+	// *
+	// * @param bool $created If True, the results of the Model::find() to create it if it was null
+	// * @return array
+	// */
+	//	public function getVideoFrameSetting($created) {
+	//		$conditions = array(
+	//			'frame_key' => Current::read('Frame.key')
+	//		);
+	//
+	//		$videoFrameSetting = $this->find('first', array(
+	//			'recursive' => -1,
+	//			'conditions' => $conditions,
+	//		));
+	//
+	//		if ($created && ! $videoFrameSetting) {
+	//			$videoFrameSetting = $this->create(array(
+	//				'frame_key' => Current::read('Frame.key'),
+	//			));
+	//		}
+	//
+	//		return $videoFrameSetting;
+	//	}
+
 /**
- * VideoFrameSettingデータ取得
- *
- * @param bool $created If True, the results of the Model::find() to create it if it was null
- * @return array
- */
-	public function getVideoFrameSetting($created) {
-		$conditions = array(
-			'frame_key' => Current::read('Frame.key')
-		);
-
-		$videoFrameSetting = $this->find('first', array(
-			'recursive' => -1,
-			'conditions' => $conditions,
-		));
-
-		if ($created && ! $videoFrameSetting) {
-			$videoFrameSetting = $this->create(array(
-				'frame_key' => Current::read('Frame.key'),
-			));
-		}
-
-		return $videoFrameSetting;
-	}
-
-/**
- * VideoFrameSettingデータ保存
+ * IdpUserProfileデータ保存
  *
  * @param array $data received post data
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
-	public function saveVideoFrameSetting($data) {
+	public function saveIdpUserProfile($data) {
 		//トランザクションBegin
 		$this->begin();
 
@@ -129,7 +122,7 @@ class IdpUserProfile extends AuthShibbolethAppModel {
 
 		try {
 			// 保存
-			if (! $videoFrameSetting = $this->save(null, false)) {
+			if (! $idpUserProfile = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
@@ -141,6 +134,6 @@ class IdpUserProfile extends AuthShibbolethAppModel {
 			$this->rollback($ex);
 		}
 
-		return $videoFrameSetting;
+		return $idpUserProfile;
 	}
 }

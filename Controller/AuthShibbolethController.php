@@ -19,6 +19,15 @@ App::uses('AuthShibbolethAppController', 'AuthShibboleth.Controller');
 class AuthShibbolethController extends AuthShibbolethAppController {
 
 /**
+ * use model
+ *
+ * @var array
+ */
+	public $uses = array(
+		'AuthShibboleth.IdpUser',
+	);
+
+/**
  * Other components
  *
  * @var array
@@ -163,7 +172,18 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 
 		if ($this->Auth->login()) {
 			// ユーザ紐づけ
-
+			$data = array();
+			if (! $idpUser = $this->IdpUser->saveIdpUser($data)) {
+				//				$url = NetCommonsUrl::actionUrl(array(
+				//					'controller' => 'videos',
+				//					'action' => 'view',
+				//					'block_id' => Current::read('Block.id'),
+				//					'frame_id' => Current::read('Frame.id'),
+				//					'key' => $idpUser['Video']['key']
+				//				));
+				//				return $this->redirect($url);
+			}
+			//$this->NetCommons->handleValidationError($this->Video->validationErrors);
 
 			// user情報更新
 			$User->updateLoginTime($this->Auth->user('id'));
