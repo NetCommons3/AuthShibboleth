@@ -9,6 +9,7 @@
  */
 
 App::uses('AuthShibbolethAppController', 'AuthShibboleth.Controller');
+App::uses('AuthShibbolethComponent', 'AuthShibboleth.Controller/Component');
 App::uses('UserAttributeChoice', 'UserAttributes.Model');
 
 /**
@@ -46,7 +47,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  **/
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('ds', 'mapping');
+		$this->Auth->allow('secure', 'ds', 'mapping');
 	}
 
 /**
@@ -57,6 +58,48 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  **/
 	public function ds() {
 		$this->view = 'AuthShibboleth.AuthShibboleth/ds';
+	}
+
+/**
+ * 初期処理
+ *
+ * @return CakeResponse
+ **/
+	public function secure() {
+		$this->request->base = str_replace(AuthShibbolethComponent::SHIBBOLETH_LOCATION, '', $this->request->base);
+		$baseUrl = Router::url('/', true);
+		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/mapping';
+
+		// IdPのユーザ情報 セット
+		$this->AuthShibboleth->setIdpUserData();
+
+		// IdPによる個人識別番号 or persistentId の存在チェック
+		if ($this->AuthShibboleth->isIdpUserid()) {
+			// リダイレクト
+			return $this->redirect($redirect);
+		}
+
+		//$session->setParameter("login_wayf_not_auto_login", _ON);
+		//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
+
+		//$url = BASE_URL_HTTPS . "/Shibboleth.sso/Logout?return=" . rawurlencode(BASE_URL);
+		//$commonMain->redirectHeader($url, 10, $errStr);
+		$returnUrl = $baseUrl . 'auth/login';
+		$redirect = $baseUrl . 'Shibboleth.sso/Logout?return=' . $returnUrl;
+
+		// NC2メッセージ　login_error_externalId = "選択した所属機関認証システムから必要な属性情報が得られないため、<br />ログインすることができません。<br /><div style='margin-top:15px;'>選択した所属機関認証システムの管理者にお問い合わせください。</div>"
+		// メッセージ表示
+		$this->NetCommons->setFlashNotification(
+			__d('auth_shibboleth', '選択した所属機関認証システムから必要な属性情報が得られないため、ログインすることができません。選択した所属機関認証システムの管理者にお問い合わせください。'),
+			array(
+				'class' => 'danger',
+				'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
+			),
+			400
+		);
+
+		// リダイレクト
+		return $this->redirect($redirect);
 	}
 
 /**
@@ -73,41 +116,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 			$this->_login();
 
 		} else {
-			//表示処理
-			$this->AuthShibboleth->setIdpUserData();
-			if (! $this->AuthShibboleth->isIdpUserid()) {
-				//$session->setParameter("login_wayf_not_auto_login", _ON);
-				//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
-				//$url = BASE_URL_HTTPS . "/Shibboleth.sso/Logout?return=" . rawurlencode(BASE_URL);
-				//$commonMain->redirectHeader($url, 10, $errStr);
-				// secure/index.php からアクセスさせ、Router::url('/', true)で取得すると https://example.com/secure/になる。
-				// secure/にNC3がインストールされているわけではないため、一時的にbaseを'/'にする。
-				// [まだ] 使い終わったら元に戻すがいいと思う。
-				// [まだ] サブディレクトリにインストールしたNC3でちゃんと動くか調査
-				$this->request->base = '/';
-
-				$baseUrl = Router::url('/', true);
-				// var_dump($baseUrl);
-				$baseUrl2 = $baseUrl . 'auth/login';
-				$redirect = $baseUrl . "Shibboleth.sso/Logout?return=" . $baseUrl2;
-
-				// NC2メッセージ　login_error_externalId = "選択した所属機関認証システムから必要な属性情報が得られないため、<br />ログインすることができません。<br /><div style='margin-top:15px;'>選択した所属機関認証システムの管理者にお問い合わせください。</div>"
-				// メッセージ表示
-				$this->NetCommons->setFlashNotification(
-					__d('auth_shibboleth', '選択した所属機関認証システムから必要な属性情報が得られないため、ログインすることができません。選択した所属機関認証システムの管理者にお問い合わせください。'),
-					array(
-						'class' => 'danger',
-						'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
-					),
-					400
-				);
-
-				// リダイレクト
-				return $this->redirect($redirect);
-			}
-			// [まだ] secure/index.phpのアクセスで、リダイレクトでちゃんと表示できるようにする
-
-			// ユーザ紐づけ済みならログイン
+			// --- ユーザ紐づけ済みならログイン
 			// IdPによる個人識別番号 で取得
 			$idpUser = $this->IdpUser->findByIdpUserid($this->AuthShibboleth->getIdpUserid());
 
@@ -147,7 +156,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		//$this->__setNc2Authenticate();
 
 		if ($this->Auth->login($user)) {
-			// --- ユーザ紐づけ
+			// ユーザ紐づけ
 			$this->AuthShibboleth->saveUserMapping($this->Auth->user('id'));
 
 			// user情報更新

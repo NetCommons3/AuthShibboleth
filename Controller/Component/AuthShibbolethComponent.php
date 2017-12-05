@@ -22,12 +22,17 @@ class AuthShibbolethComponent extends Component {
  * @var string IdPによる個人識別番号。eppn=フェデレーション内のエンティティを一意に定めます
  * @see https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=12158166 属性リスト
  */
-	const IDP_USERID = "eppn";
+	const IDP_USERID = 'eppn';
 
 /**
  * @var string フェデレーション内のエンティティを匿名で表す
  */
-	const PERSISTENT_ID = "persistent-id";
+	const PERSISTENT_ID = 'persistent-id';
+
+/**
+ * @var string AuthType shibbolethのロケーション
+ */
+	const SHIBBOLETH_LOCATION = '/secure';
 
 /**
  * @var string IdPによる個人識別番号
@@ -152,7 +157,7 @@ class AuthShibbolethComponent extends Component {
 	//	}
 
 /**
- * IdPによる個人識別番号 and persistentId セット
+ * IdPのユーザ情報 セット
  *
  * @return void
  */

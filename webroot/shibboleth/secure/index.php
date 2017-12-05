@@ -18,11 +18,7 @@ if (! empty($_COOKIE)) {
 	}
 }
 
-$url = '/auth_shibboleth/auth_shibboleth/mapping';
-//header("Location: " . $url);
-//exit;
+$url = '/auth_shibboleth/auth_shibboleth/secure';
 $_SERVER['REQUEST_URI'] = $url;
 
-//require_once dirname(__FILE__) . '/../index.php';
 require_once dirname(__FILE__) . '/../app/webroot/index.php';
-
