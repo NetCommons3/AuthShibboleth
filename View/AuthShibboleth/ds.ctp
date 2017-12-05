@@ -13,10 +13,10 @@
 	<?php echo __d('auth_shibboleth', '他の機関のIdPによるShibbolethログイン'); ?>
 </h2>
 
-<hr>
-
 <?php /* DS説明 */ ?>
-<?php echo $this->element('AuthShibboleth.AuthShibboleth/description'); ?>
+<!--<div class="well well-sm">-->
+<!--	--><?php //echo __d('auth_shibboleth', 'AuthShibboleth.ds_description'); ?>
+<!--</div>-->
 
 <?php /* DS */ ?>
 <?php echo $this->element('AuthShibboleth.AuthShibboleth/ds', array(
