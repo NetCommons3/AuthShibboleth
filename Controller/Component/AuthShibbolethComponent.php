@@ -392,7 +392,7 @@ class AuthShibbolethComponent extends Component {
 				'is_shib_eptid' => $this->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
 				'status' => '2',			// 2:有効
 				// [まだ]nc3版はscope消す（shibboleth時は空なので）
-				'scope' => '',				// shibboleth時は空
+				//'scope' => '',				// shibboleth時は空
 			);
 			$idpUser = $this->_controller->IdpUser->saveIdpUser($data);
 			if (! $idpUser) {
