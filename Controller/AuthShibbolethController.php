@@ -9,6 +9,7 @@
  */
 
 App::uses('AuthShibbolethAppController', 'AuthShibboleth.Controller');
+App::uses('UserAttributeChoice', 'UserAttributes.Model');
 
 /**
  * AuthShibboleth Controller
@@ -25,6 +26,8 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  */
 	public $uses = array(
 		'AuthShibboleth.IdpUser',
+		'AuthShibboleth.IdpUserProfile',
+		'Users.User',
 	);
 
 /**
@@ -90,7 +93,8 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 			//$this->NetCommons->handleValidationError($this->Video->validationErrors);
 		} else {
 			//表示処理
-			if (! $this->AuthShibboleth->isEntityId()) {
+			$this->AuthShibboleth->setIdpUserData();
+			if (! $this->AuthShibboleth->isIdpUserid()) {
 				//$session->setParameter("login_wayf_not_auto_login", _ON);
 				//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
 				//$url = BASE_URL_HTTPS . "/Shibboleth.sso/Logout?return=" . rawurlencode(BASE_URL);
@@ -98,7 +102,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 				// secure/index.php からアクセスさせ、Router::url('/', true)で取得すると https://example.com/secure/になる。
 				// secure/にNC3がインストールされているわけではないため、一時的にbaseを'/'にする。
 				// [まだ] 使い終わったら元に戻すがいいと思う。
-				// [懸念点] サブディレクトリにインストールしたNC3でちゃんと動くか調査
+				// [まだ] サブディレクトリにインストールしたNC3でちゃんと動くか調査
 				$this->request->base = '/';
 
 				$baseUrl = Router::url('/', true);
@@ -133,31 +137,42 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 			}
 			// [まだ] secure/index.phpのアクセスで、リダイレクトでちゃんと表示できるようにする
 
-			if ($this->Auth->login()) {
-				// ログインしてたら
-				$this->_login();
+			// ユーザ紐づけ済みならログイン
+			$idpUser = $this->IdpUser->find('first', array(
+				'recursive' => 0,
+				'conditions' => array(
+					'idp_userid' => $this->AuthShibboleth->getIdpUserid(),		// IdPによる個人識別番号
+				),
+			));
+			if ($idpUser) {
+				// ユーザ検索
+				$user = $this->User->findByIdAndStatus($idpUser['IdpUser']['user_id'],
+					UserAttributeChoice::STATUS_CODE_ACTIVE);
+				if ($user) {
+					// $this->Auth->_user と同じ配列構成にする
+					$user = Hash::merge($user, $user['User']);
+					$user = Hash::remove($user, 'User');
+					// ログイン
+					$this->_login($user);
+				}
 			}
+
 		}
 	}
 
 /**
  * ユーザ紐づけ画面のログイン
  *
+ * @param array $user ユーザ情報
+ * @throws BadRequestException
  * @return CakeResponse
  **/
-	protected function _login() {
+	protected function _login($user = null) {
 		//		if (! $this->request->is('post')) {
 		//			return $this->throwBadRequest();
 		//		}
 
 		//parent::login();
-		//CakeLog::debug('[' . __METHOD__ . '] ' . __FILE__ . ' (line ' . __LINE__ . ')');
-
-		//ページタイトル
-		//$this->set('pageTitle', __d('auth', 'Login'));
-
-		//メールを送れるかどうか
-		// $this->set('isMailSend', $this->ForgotPass->isMailSendCommon('auth', 'auth'));
 
 		//if ($this->request->is('post')) {
 		//Auth->login()を実行すると、$this->UserがUsers.UserからModelAppに置き換わってしまい、
@@ -165,25 +180,50 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		$User = $this->User;
 
 		$this->Auth->authenticate['all']['scope'] = array(
-			'User.status' => '1'
+			'User.status' => UserAttributeChoice::STATUS_CODE_ACTIVE
 		);
 
 		//$this->__setNc2Authenticate();
 
-		if ($this->Auth->login()) {
-			// ユーザ紐づけ
-			$data = array();
-			if (! $idpUser = $this->IdpUser->saveIdpUser($data)) {
-				//				$url = NetCommonsUrl::actionUrl(array(
-				//					'controller' => 'videos',
-				//					'action' => 'view',
-				//					'block_id' => Current::read('Block.id'),
-				//					'frame_id' => Current::read('Frame.id'),
-				//					'key' => $idpUser['Video']['key']
-				//				));
-				//				return $this->redirect($url);
+		if ($this->Auth->login($user)) {
+			// --- ユーザ紐づけ
+			$idpUser = $this->IdpUser->find('first', array(
+				'recursive' => 0,
+				'conditions' => array(
+					'user_id' => $this->Auth->user('id'),
+					'idp_userid' => $this->AuthShibboleth->getIdpUserid(),		// IdPによる個人識別番号
+				),
+			));
+
+			if (! $idpUser) {
+				// 外部ID連携 保存
+				$data = array(
+					'user_id' => $this->Auth->user('id'),
+					'idp_userid' => $this->AuthShibboleth->getIdpUserid(),		// IdPによる個人識別番号
+					'is_shib_eptid' => $this->AuthShibboleth->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
+					'status' => '2',			// 2:有効
+					'scope' => '',				// shibboleth時は空
+				);
+				$idpUser = $this->IdpUser->saveIdpUser($data);
+				if (! $idpUser) {
+					throw new BadRequestException(print_r($this->IdpUser->validationErrors, true));
+				}
 			}
-			//$this->NetCommons->handleValidationError($this->Video->validationErrors);
+
+			// 外部ID連携詳細 保存
+			$data = array(
+				'idp_user_id' => $idpUser['IdpUser']['id'],		// idp_user.id
+				'email' => $this->AuthShibboleth->getProfileByItemKey('mail'),
+				'profile' => serialize($this->Session->read('AuthShibboleth')),
+			);
+			if (Hash::get($idpUser, 'IdpUserProfile.id')) {
+				$data += array('id' => Hash::get($idpUser, 'IdpUserProfile.id'));
+			}
+
+			$IdpUserProfile = $this->IdpUserProfile->saveIdpUserProfile($data);
+			if (! $IdpUserProfile) {
+				throw new BadRequestException(print_r($this->IdpUserProfile->validationErrors, true));
+			}
 
 			// user情報更新
 			$User->updateLoginTime($this->Auth->user('id'));

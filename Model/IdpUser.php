@@ -48,6 +48,7 @@ class IdpUser extends AuthShibbolethAppModel {
 					'required' => true,
 				),
 			),
+			// IdPによる個人識別番号
 			'idp_userid' => array(
 				'notBlank' => array(
 					'rule' => array('notBlank'),
@@ -69,17 +70,27 @@ class IdpUser extends AuthShibbolethAppModel {
 					'required' => true,
 				),
 			),
-			'scope' => array(
-				'notBlank' => array(
-					'rule' => array('notBlank'),
-					'message' => __d('net_commons', 'Invalid request.'),
-					'required' => true,
-				),
-			),
 		));
 
 		return parent::beforeValidate($options);
 	}
+
+/**
+ * hasOne associations
+ *
+ * @var array
+ */
+	public $hasOne = array(
+		'IdpUserProfile' => array(
+			'className' => 'AuthShibboleth.IdpUserProfile',
+			//'foreignKey' => false,
+			//'conditions' => array(
+			//	'IdpUser.id = IdpUserProfile.idp_user_id',
+			//),
+			//'fields' => '',
+			//'order' => ''
+		)
+	);
 
 	///**
 	// * belongsTo associations
@@ -124,7 +135,7 @@ class IdpUser extends AuthShibbolethAppModel {
 	//	}
 
 /**
- * IdpUserデータ保存
+ * 外部ID連携 データ保存
  *
  * @param array $data received post data
  * @return mixed On success Model::$data if its not empty or true, false on failure

@@ -15,27 +15,43 @@ App::uses('Component', 'Controller');
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Controller\Component
+ * @property SessionComponent $Session
  */
 class AuthShibbolethComponent extends Component {
 /**
- * @var string フェデレーション内のエンティティを一意に定めます
+ * @var string IdPによる個人識別番号。eppn=フェデレーション内のエンティティを一意に定めます
  * @see https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=12158166 属性リスト
  */
-	const ENTITY_ID = "eppn";
+	const IDP_USERID = "eppn";
 
 /**
  * @var string フェデレーション内のエンティティを匿名で表す
  */
 	const PERSISTENT_ID = "persistent-id";
 
-	///**
-	// * Other components
-	// *
-	// * @var array
-	// */
-	//	public $components = array(
-	//		'Session',
-	//	);
+/**
+ * @var string IdPによる個人識別番号
+ */
+	public $idpUserid = null;
+
+/**
+ * @var string フェデレーション内のエンティティを匿名で表す
+ */
+	public $persistentId = null;
+
+/**
+ * @var array プロフィール情報。shibbolethログインで取得できる情報の配列
+ */
+	public $profile = array();
+
+/**
+ * Other components
+ *
+ * @var array
+ */
+	public $components = array(
+		'Session',
+	);
 
 /**
  * @var Controller コントローラ
@@ -140,131 +156,216 @@ class AuthShibbolethComponent extends Component {
 	//	}
 
 /**
- * entityIdの存在チェック
+ * IdPによる個人識別番号 and persistentId セット
  *
- * @return bool 成功 or 失敗
+ * @return void
  */
-	public function isEntityId() {
-		// --- getEntityId()
+	public function setIdpUserData() {
 		// Shibbolethの設定によって、eppn属性にREDIRECT_が付与されてしまうことがある
-		$entityId = "";
-		$persistentId = "";
+		//$entityId = null;
+		//$persistentId = null;
 		//var_dump($_SERVER);
+		$this->Session->delete('AuthShibboleth');
+
+		$prefix = '';
 		for ($i = 0; $i < 5; $i++) {
 			$prefix = str_repeat("REDIRECT_", $i);
-			$entityId = !empty($_SERVER[$prefix . AuthShibbolethComponent::ENTITY_ID]) ?
-				$_SERVER[$prefix . AuthShibbolethComponent::ENTITY_ID] : "";
-			if (!empty($_SERVER[$prefix . AuthShibbolethComponent::PERSISTENT_ID])) {
-				$persistentId = $_SERVER[$prefix . AuthShibbolethComponent::PERSISTENT_ID];
-			}
-			if ($entityId != "") {
+			//$entityId = !empty($_SERVER[$prefix . AuthShibbolethComponent::ENTITY_ID]) ?
+			//	$_SERVER[$prefix . AuthShibbolethComponent::ENTITY_ID] : "";
+			//if (!empty($_SERVER[$prefix . AuthShibbolethComponent::PERSISTENT_ID])) {
+			//	$persistentId = $_SERVER[$prefix . AuthShibbolethComponent::PERSISTENT_ID];
+			//}
+			//$this->idpUserid = Hash::get($_SERVER, $prefix . AuthShibbolethComponent::IDP_USERID);
+			//if (! is_null($this->idpUserid)) {
+			//	$this->profile[AuthShibbolethComponent::IDP_USERID] = $this->idpUserid;
+			//}
+			//$this->idpUserid = $this->__setProfile($prefix, AuthShibbolethComponent::IDP_USERID);
+			//$this->persistentId = $this->__setProfile($prefix, AuthShibbolethComponent::PERSISTENT_ID);
+			$this->__setProfile($prefix, AuthShibbolethComponent::IDP_USERID);
+			$this->__setProfile($prefix, AuthShibbolethComponent::PERSISTENT_ID);
+			$idpUserid = $this->getProfileByItemKey(AuthShibbolethComponent::IDP_USERID);
+
+			//if ($entityId != "") {
+			//if ($this->idpUserid) {
+			if ($idpUserid) {
 				break;
 			}
 		}
-		if ($entityId == "" && $persistentId != "") {
-			$entityId = $persistentId;
-		}
+		//if ($entityId == "" && $persistentId != "") {
+		//if (is_null($this->entityId) && ! is_null($this->persistentId)) {
+		//	$entityId = $persistentId;
+		//	$this->isShibEptid = '1';
+		//}
 
-		if (empty($entityId)) {
-			//$commonMain =& $container->getComponent("commonMain");
-			//$session->setParameter("login_wayf_not_auto_login", _ON);
-			//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
-			//$url = BASE_URL_HTTPS . "/Shibboleth.sso/Logout?return=" . rawurlencode(BASE_URL);
-			//$commonMain->redirectHeader($url, 10, $errStr);
-
-			//return $errStr;
-			return false;
-		}
-		//$session->removeParameter("login_wayf_not_auto_login");
-		//$this->Session->delete('AuthShibboleth.loginWayfNotAutoLogin');
-		//return true;
-
-		// パーミッションがあるかチェック
-		//		if (!$this->__checkPermission()) {
+		//		//if (empty($entityId)) {
+		//		if (is_null($this->entityId) && is_null($this->persistentId)) {
+		//			// entityId=空、persistentId=空
+		//			//$commonMain =& $container->getComponent("commonMain");
+		//			//$session->setParameter("login_wayf_not_auto_login", _ON);
+		//			//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
+		//			//$url = BASE_URL_HTTPS . "/Shibboleth.sso/Logout?return=" . rawurlencode(BASE_URL);
+		//			//$commonMain->redirectHeader($url, 10, $errStr);
+		//
+		//			//return $errStr;
 		//			return false;
+		//			//		} elseif (is_null($this->entityId) && ! is_null($this->persistentId)) {
+		//			//			// entityId=空、persistentId=あり
+		//			//			$this->isShibEptid = '1';
+		//			//		} else {
+		//			//			// entityId=あり、persistentId=あり or なし
+		//			//			$this->isShibEptid = '0';
+		//		}
+		//
+		//		//$session->removeParameter("login_wayf_not_auto_login");
+		//		//$this->Session->delete('AuthShibboleth.loginWayfNotAutoLogin');
+		//		//return true;
+		//
+		//		// パーミッションがあるかチェック
+		//		//		if (!$this->__checkPermission()) {
+		//		//			return false;
+		//		//		}
+		//
+		//		return true;
+		if (! $this->isIdpUserid()) {
+			return;
+		}
+
+		//		//メールアドレス
+		//		if (isset($_SERVER[$prefix . 'mail'])) {
+		//			$buf_name = $_SERVER[$prefix . 'mail'];
+		//			$this->session->setParameter(array('login_external', 'email'), $buf_name);
+		//		}
+		//		//氏名(日本語)
+		//		if (isset($_SERVER[$prefix . 'jaDisplayName']) || isset($_SERVER[$prefix . 'jasn']) && isset($_SERVER[$prefix . 'jaGivenName'])) {
+		//			if (isset($_SERVER[$prefix . 'jaDisplayName'])) {
+		//				$buf_name = $_SERVER[$prefix . 'jaDisplayName'];
+		//			} else {
+		//				$buf_name = $_SERVER[$prefix . 'jasn'];
+		//				$buf_name .= " ". $_SERVER[$prefix . 'jaGivenName'];
+		//			}
+		//			$this->session->setParameter(array('login_external', 'user_name'), $buf_name);
+		//		}
+		//		//所属(日本語)
+		//		if (isset($_SERVER[$prefix . 'jao'])) {
+		//			$buf_name = $_SERVER[$prefix . 'jao'];
+		//			$this->session->setParameter(array('login_external', 'affiliation'), $buf_name);
+		//		}
+		//		//部署(日本語)
+		//		if (isset($_SERVER[$prefix . 'jaou'])) {
+		//			$buf_name = $_SERVER[$prefix . 'jaou'];
+		//			$this->session->setParameter(array('login_external', 'section'), $buf_name);
+		//		}
+		//		//氏名(英語)
+		//		if (isset($_SERVER[$prefix . 'displayName']) || isset($_SERVER[$prefix . 'sn']) && isset($_SERVER[$prefix . 'givenName'])) {
+		//			if (isset($_SERVER[$prefix . 'displayName'])) {
+		//				$buf_name = $_SERVER[$prefix . 'displayName'];
+		//			} else {
+		//				$buf_name = $_SERVER[$prefix . 'givenName'];
+		//				$buf_name .= " ".$_SERVER[$prefix . 'sn'];
+		//			}
+		//			$this->session->setParameter(array('login_external', 'user_name_en'), $buf_name);
+		//		}
+		//		//所属(英語)
+		//		if (isset($_SERVER[$prefix . 'o'])) {
+		//			$buf_name = $_SERVER[$prefix . 'o'];
+		//			$this->session->setParameter(array('login_external', 'affiliation_en'), $buf_name);
+		//		}
+		//		//部署(英語)
+		//		if (isset($_SERVER[$prefix . 'ou'])) {
+		//			$buf_name = $_SERVER[$prefix . 'ou'];
+		//			$this->session->setParameter(array('login_external', 'section_en'), $buf_name);
 		//		}
 
+		$this->__setProfile($prefix, 'mail');			//メールアドレス
+		$this->__setProfile($prefix, 'jaDisplayName');	//日本語氏名（表示名）
+		$this->__setProfile($prefix, 'jasn');			//氏名（姓）の日本語
+		$this->__setProfile($prefix, 'jaGivenName');	//氏名（名）の日本語
+		$this->__setProfile($prefix, 'jao');			//所属(日本語)
+		$this->__setProfile($prefix, 'jaou');			//部署(日本語)
+		$this->__setProfile($prefix, 'displayName');	//英字氏名（表示名）
+		$this->__setProfile($prefix, 'sn');				//氏名(姓)の英字
+		$this->__setProfile($prefix, 'givenName');		//氏名(名)の英字
+		$this->__setProfile($prefix, 'o');				//所属(英語)
+		$this->__setProfile($prefix, 'ou');				//部署(英語)
+	}
+
+/**
+ * プロフィール情報 セット
+ *
+ * @param string $prefix Shibbolethの設定によって、eppn属性にREDIRECT_が付与されてしまうことがある
+ * @param string $itemKey Sessionの配列キーの一部
+ * @return void
+ */
+	private function __setProfile($prefix, $itemKey) {
+		$item = Hash::get($_SERVER, $prefix . $itemKey);
+		if (! is_null($item)) {
+			//$this->profile[$itemKey] = $item;
+			$this->Session->write('AuthShibboleth.' . $itemKey, $item);
+		}
+		// * @return string 取得した値
+		//return $item;
+	}
+
+/**
+ * プロフィール情報 取得
+ *
+ * @param string $itemKey Sessionの配列キーの一部
+ * @return string 取得した値
+ */
+	public function getProfileByItemKey($itemKey) {
+		//return Hash::get($this->profile, $itemKey);
+		return $this->Session->read('AuthShibboleth.' . $itemKey);
+	}
+
+/**
+ * IdPによる個人識別番号 or persistentId の存在チェック
+ *
+ * @return bool true:存在する、false:存在しない
+ */
+	public function isIdpUserid() {
+		$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
+		if (is_null($idpUserid) && is_null($persistentId)) {
+			return false;
+		}
 		return true;
 	}
 
-	///**
-	// * パーミッションがあるかチェック
-	// *
-	// * @return bool true:パーミッションあり or false:パーミッションなし
-	// */
-	//	private function __checkPermission() {
-	//		// 登録処理
-	//		if ($this->_controller->action == 'add') {
-	//			// 投稿許可ありか
-	//			return $this->__isCreatable();
-	//		}
-	//
-	//		// 編集処理 or 削除処理
-	//		if ($this->_controller->action == 'edit' || $this->_controller->action == 'delete') {
-	//			// 編集許可ありか
-	//			return $this->__isEditable();
-	//		}
-	//
-	//		// 承認処理 and 承認許可あり
-	//		if ($this->_controller->action == 'approve' &&
-	//				Current::permission('content_comment_publishable')) {
-	//			return true;
-	//		}
-	//		return false;
-	//	}
-	//
-	///**
-	// * 投稿許可ありか
-	// *
-	// * @return bool true:あり or false:なし
-	// */
-	//	private function __isCreatable() {
-	//		// 投稿許可あり
-	//		if (Current::permission('content_comment_creatable')) {
-	//			return true;
-	//		}
-	//
-	//		$isVisitorCreatable = $this->_controller->request->data('_tmp.is_visitor_creatable');
-	//		//  ビジター投稿許可あり
-	//		if ($isVisitorCreatable) {
-	//			return true;
-	//		}
-	//		return false;
-	//	}
-	//
-	///**
-	// * 編集許可ありか
-	// *
-	// * @return bool true:あり or false:なし
-	// */
-	//	private function __isEditable() {
-	//		// 編集許可あり
-	//		if (Current::permission('content_comment_editable')) {
-	//			return true;
-	//		}
-	//		// 自分で投稿したコメントなら、編集・削除可能
-	//		if ($this->_controller->data['ContentComment']['created_user'] == (int)Current::read('User.id')) {
-	//			return true;
-	//		}
-	//		return false;
-	//	}
-	//
-	///**
-	// * dataの準備
-	// *
-	// * @return array data
-	// */
-	//	private function __readyData() {
-	//		$data['ContentComment'] = $this->_controller->request->data('ContentComment');
-	//		$data['ContentComment']['block_key'] = Current::read('Block.key');
-	//		$data['_mail'] = $this->_controller->request->data('_mail');
-	//		$data['_mail']['url'] = $this->_controller->request->referer();
-	//		if ($this->_controller->action == 'approve') {
-	//			$data['_mail']['is_comment_approve_action'] = 1;
-	//		} else {
-	//			$data['_mail']['is_comment_approve_action'] = 0;
-	//		}
-	//
-	//		return $data;
-	//	}
+/**
+ * IdPによる個人識別番号 or persistentId の取得
+ *
+ * @return string idpUserid or persistentId
+ */
+	public function getIdpUserid() {
+		$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
+		if (is_null($idpUserid) && is_null($persistentId)) {
+			// idpUserid=空、persistentId=空
+			return null;
+		} elseif (is_null($idpUserid) && ! is_null($persistentId)) {
+			// idpUserid=空、persistentId=あり
+			return $persistentId;
+		}
+		// idpUserid=あり、persistentId=あり or なし
+		return $idpUserid;
+	}
+
+/**
+ * ePTID(eduPersonTargetedID)かどうか
+ *
+ * @return int null：Shibboleth以外, 0：ePPN(eduPersonPrincipalName), 1：ePTID(eduPersonTargetedID)
+ */
+	public function isShibEptid() {
+		$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
+		if (is_null($idpUserid) && is_null($persistentId)) {
+			// idpUserid=空、persistentId=空
+			return null;
+		} elseif (is_null($idpUserid) && ! is_null($persistentId)) {
+			// idpUserid=空、persistentId=あり
+			return '1';
+		}
+		// idpUserid=あり、persistentId=あり or なし
+		return '0';
+	}
 }

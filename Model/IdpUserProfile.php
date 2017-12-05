@@ -41,7 +41,8 @@ class IdpUserProfile extends AuthShibbolethAppModel {
  */
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge($this->validate, array(
-			'idp_userid' => array(
+			// IdpUser.id
+			'idp_user_id' => array(
 				'notBlank' => array(
 					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
@@ -103,7 +104,7 @@ class IdpUserProfile extends AuthShibbolethAppModel {
 	//	}
 
 /**
- * IdpUserProfileデータ保存
+ * 外部ID連携詳細 データ保存
  *
  * @param array $data received post data
  * @return mixed On success Model::$data if its not empty or true, false on failure
