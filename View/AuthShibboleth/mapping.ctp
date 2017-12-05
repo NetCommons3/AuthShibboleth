@@ -93,7 +93,6 @@
 
 		</div>
 
-		<!--		<div class="col-xs-6" style=" vertical-align:middle; border: solid 1px red;">-->
 		<div class="col-xs-6">
 			<br />
 			<p>
@@ -102,8 +101,7 @@
 					SiteSettingUtil::read('App.site_name')); ?>
 			</p>
 
-			<!--			<h2 style="line-height: 150px;">　</h2>-->
-			<a href="/auth/auto_user_regist/request" class="btn btn-default btn-block">
+			<a href="/auth_shibboleth/auth_shibboleth_auto_user_regist/request" class="btn btn-default btn-block">
 				<?php echo __d('auth_shibboleth', '新規登録'); ?>
 			</a>
 		</div>

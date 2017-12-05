@@ -70,21 +70,17 @@ class AuthShibbolethComponent extends Component {
 		$this->_controller = $controller;
 	}
 
-	///**
-	// * Called after the Controller::beforeFilter() and before the controller action
-	// *
-	// * @param Controller $controller Controller with components to startup
-	// * @return void
-	// * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
-	// */
-	//	public function startup(Controller $controller) {
-	//		$controller->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
-	//
-	//		// コンテントコメントからエラーメッセージを受け取る仕組み
-	//		/* @link http://skgckj.hateblo.jp/entry/2014/02/09/005111 */
-	//		$controller->ContentComment->validationErrors =
-	//			$this->Session->read('ContentComments.forRedirect.errors');
-	//	}
+/**
+ * Called after the Controller::beforeFilter() and before the controller action
+ *
+ * @param Controller $controller Controller with components to startup
+ * @return void
+ * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
+ */
+	public function startup(Controller $controller) {
+		$controller->IdpUser = ClassRegistry::init('AuthShibboleth.IdpUser');
+		$controller->IdpUserProfile = ClassRegistry::init('AuthShibboleth.IdpUserProfile');
+	}
 
 	///**
 	// * Called before the Controller::beforeRender(), and before
@@ -165,6 +161,8 @@ class AuthShibbolethComponent extends Component {
 		//$entityId = null;
 		//$persistentId = null;
 		//var_dump($_SERVER);
+
+		// 登録途中でキャンセルやブラウザ閉じた後、再登録した場合を考え、セッション初期化
 		$this->Session->delete('AuthShibboleth');
 
 		$prefix = '';
@@ -367,5 +365,51 @@ class AuthShibbolethComponent extends Component {
 		}
 		// idpUserid=あり、persistentId=あり or なし
 		return '0';
+	}
+
+/**
+ * ユーザ紐づけ
+ *
+ * @param int $userId ユーザID
+ * @return void
+ * @throws BadRequestException
+ */
+	public function saveUserMapping($userId) {
+		// IdPによる個人識別番号 で取得
+		$idpUser = $this->_controller->IdpUser->findByIdpUserid($this->getIdpUserid());
+
+		if (! $idpUser) {
+			// 外部ID連携 保存
+			$data = array(
+				//'user_id' => $this->_controller->Auth->user('id'),
+				'user_id' => $userId,
+				'idp_userid' => $this->getIdpUserid(),		// IdPによる個人識別番号
+				'is_shib_eptid' => $this->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
+				'status' => '2',			// 2:有効
+				// [まだ]nc3版はscope消す（shibboleth時は空なので）
+				'scope' => '',				// shibboleth時は空
+			);
+			$idpUser = $this->_controller->IdpUser->saveIdpUser($data);
+			if (! $idpUser) {
+				throw new BadRequestException(print_r($this->_controller->IdpUser->validationErrors, true));
+			}
+		}
+
+		// 外部ID連携詳細 保存
+		$data = array(
+			'idp_user_id' => $idpUser['IdpUser']['id'],		// idp_user.id
+			'email' => $this->getProfileByItemKey('mail'),
+			'profile' => serialize($this->Session->read('AuthShibboleth')),
+		);
+		if (Hash::get($idpUser, 'IdpUserProfile.id')) {
+			$data += array('id' => Hash::get($idpUser, 'IdpUserProfile.id'));
+		}
+		$IdpUserProfile = $this->_controller->IdpUserProfile->saveIdpUserProfile($data);
+		if (! $IdpUserProfile) {
+			throw new BadRequestException(print_r($this->_controller->IdpUserProfile->validationErrors, true));
+		}
+
+		// ユーザ紐づけ済みのため、セッション初期化
+		$this->Session->delete('AuthShibboleth');
 	}
 }
