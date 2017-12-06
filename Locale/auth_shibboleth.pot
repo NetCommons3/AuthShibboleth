@@ -18,3 +18,15 @@ msgstr ""
 
 msgid "Stay logged in"
 msgstr ""
+
+msgid "AuthShibboleth.ds_description"
+msgstr ""
+
+msgid "AuthShibboleth.setting.label"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_additional_idps"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_additional_idps.help"
+msgstr ""

@@ -21,3 +21,18 @@ msgstr "ログインしたままにする"
 
 msgid "AuthShibboleth.ds_description"
 msgstr ""
+
+msgid "AuthShibboleth.setting.label"
+msgstr "Shibbolethログイン"
+
+msgid "AuthShibboleth.wayf_additional_idps"
+msgstr "他のフェデレーションのIdPを追加する"
+
+msgid "AuthShibboleth.wayf_additional_idps.help"
+msgstr ""
+"設定例）<br />"
+"{<br />"
+"&nbsp;&nbsp;&nbsp;&nbsp;name: \"Some Other University\"<br />"
+"&nbsp;&nbsp;, entityID: \"https://other.univ.edu/idp/shibboleth\"<br />"
+"&nbsp;&nbsp;, SAML1SSOurl: \"https://other.univ.edu/shibboleth-idp/SSO\"<br />"
+"},"

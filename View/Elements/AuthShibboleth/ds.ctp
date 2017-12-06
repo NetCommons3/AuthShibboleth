@@ -14,6 +14,7 @@
 if (! isset($wayfBorderColor)) {
 	$wayfBorderColor = '#F4F7F7';
 }
+$baseUrl = Router::url('/', true);
 ?>
 
 <!-- EMBEDDED-WAYF-START -->
@@ -56,14 +57,6 @@ var wayf_sp_handlerURL = "https://e-rad.local:4437/Shibboleth.sso";
 // var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome";
 //var wayf_return_url = "https://my-app.switch.ch/secure/index.php";
 //var wayf_return_url = "https://e-rad.local:4437/secure/shib.php";
-// DSからユーザ紐づけ画面に直接遷移する場合は下記を設定
-// またサイトのapache.confに以下を追記
-//    <Location /auth_shibboleth/auth_shibboleth/mapping>
-//    AuthType shibboleth
-//    ShibRequestSetting requireSession 1
-//    require shib-session
-//    </Location>
-//var wayf_return_url = "https://e-rad.local:4437/auth_shibboleth/auth_shibboleth/mapping";
 var wayf_return_url = "https://e-rad.local:4437/secure/index.php";
 
 
@@ -345,7 +338,7 @@ var wayf_discofeed_url = "https://office.gakunin.nii.ac.jp/TestFed/export/discof
 	is logged in into your application.
 	-->
 	<p>
-		<strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="/Shibboleth.sso/DS?target=">proceed manually</a>.
+		<strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="<?php echo $baseUrl; ?>Shibboleth.sso/DS?target=">proceed manually</a>.
 	</p>
 </noscript>
 
