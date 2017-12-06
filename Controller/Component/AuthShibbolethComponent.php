@@ -18,21 +18,11 @@ App::uses('Component', 'Controller');
  * @property SessionComponent $Session
  */
 class AuthShibbolethComponent extends Component {
-/**
- * @var string IdPによる個人識別番号。eppn=フェデレーション内のエンティティを一意に定めます
- * @see https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=12158166 属性リスト
- */
-	const IDP_USERID = 'eppn';
 
 /**
  * @var string フェデレーション内のエンティティを匿名で表す
  */
 	const PERSISTENT_ID = 'persistent-id';
-
-/**
- * @var string AuthType shibbolethのロケーション
- */
-	const SHIBBOLETH_LOCATION = '/secure';
 
 /**
  * @var string IdPによる個人識別番号
@@ -100,11 +90,11 @@ class AuthShibbolethComponent extends Component {
 		$prefix = '';
 		for ($i = 0; $i < 5; $i++) {
 			$prefix = str_repeat("REDIRECT_", $i);
-			$this->__setSession($prefix, AuthShibbolethComponent::IDP_USERID);
+			$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
+			$this->__setSession($prefix, $idpUseridSetting);
 			$this->__setSession($prefix, AuthShibbolethComponent::PERSISTENT_ID);
 
-			//$idpUserid = $this->getProfileByItemKey(AuthShibbolethComponent::IDP_USERID);
-			$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+			$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
 			if ($idpUserid) {
 				break;
 			}
@@ -150,7 +140,8 @@ class AuthShibbolethComponent extends Component {
  * @return bool true:存在する、false:存在しない
  */
 	public function isIdpUserid() {
-		$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+		$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
+		$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
 		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
 		if (is_null($idpUserid) && is_null($persistentId)) {
 			return false;
@@ -164,7 +155,8 @@ class AuthShibbolethComponent extends Component {
  * @return string idpUserid or persistentId
  */
 	public function getIdpUserid() {
-		$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+		$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
+		$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
 		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
 		if (is_null($idpUserid) && is_null($persistentId)) {
 			// idpUserid=空、persistentId=空
@@ -183,7 +175,8 @@ class AuthShibbolethComponent extends Component {
  * @return int null：Shibboleth以外, 0：ePPN(eduPersonPrincipalName), 1：ePTID(eduPersonTargetedID)
  */
 	public function isShibEptid() {
-		$idpUserid = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::IDP_USERID);
+		$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
+		$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
 		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
 		if (is_null($idpUserid) && is_null($persistentId)) {
 			// idpUserid=空、persistentId=空

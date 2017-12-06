@@ -14,7 +14,6 @@
 if (! isset($wayfBorderColor)) {
 	$wayfBorderColor = '#F4F7F7';
 }
-$baseUrl = Router::url('/', true);
 ?>
 
 <!-- EMBEDDED-WAYF-START -->
@@ -37,19 +36,22 @@ $baseUrl = Router::url('/', true);
 // Examples: "https://wayf.switch.ch/SWITCHaai/WAYF", "https://wayf-test.switch.ch/aaitest/WAYF";
 // [Mandatory]
 //var wayf_URL = "https://ds.gakunin.nii.ac.jp/WAYF";
-var wayf_URL = "https://test-ds.gakunin.nii.ac.jp/WAYF";
+//var wayf_URL = "https://test-ds.gakunin.nii.ac.jp/WAYF";
+var wayf_URL = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_URL'); ?>";
 
 // EntityID of the Service Provider that protects this Resource
 // Examples: "https://econf.switch.ch/shibboleth", "https://dokeos.unige.ch/shibboleth"
 // [Mandatory]
 //var wayf_sp_entityID = "https://my-app.switch.ch/shibboleth-sp";
-var wayf_sp_entityID = "https://e-rad.local:4437/shibboleth-sp";
+//var wayf_sp_entityID = "https://e-rad.local:4437/shibboleth-sp";
+var wayf_sp_entityID = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_sp_entityID'); ?>";
 
 // Shibboleth Service Provider handler URL
 // Examples: "https://point.switch.ch/Shibboleth.sso", "https://rr.aai.switch.ch/aaitest/Shibboleth.sso"
 // [Mandatory, if wayf_use_discovery_service = false]
 //var wayf_sp_handlerURL = "https://my-app.switch.ch/Shibboleth.sso";
-var wayf_sp_handlerURL = "https://e-rad.local:4437/Shibboleth.sso";
+//var wayf_sp_handlerURL = "https://e-rad.local:4437/Shibboleth.sso";
+var wayf_sp_handlerURL = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_sp_handlerURL'); ?>";
 
 // URL on this resource that the user shall be returned to after authentication
 // Examples: "https://econf.switch.ch/aai/home", "https://olat.uzh.ch/my/courses"
@@ -57,7 +59,8 @@ var wayf_sp_handlerURL = "https://e-rad.local:4437/Shibboleth.sso";
 // var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome";
 //var wayf_return_url = "https://my-app.switch.ch/secure/index.php";
 //var wayf_return_url = "https://e-rad.local:4437/secure/shib.php";
-var wayf_return_url = "https://e-rad.local:4437/secure/index.php";
+//var wayf_return_url = "https://e-rad.local:4437/secure/index.php";
+var wayf_return_url = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_return_url'); ?>";
 
 
 //////////////////// RECOMMENDED SETTINGS ////////////////////
@@ -87,8 +90,9 @@ var wayf_show_remember_checkbox = true;
 //          This option will cause problems that are difficult to find
 //          in case they accidentially select a wrong Home Organisation
 // [Optional, false]
-var wayf_force_remember_for_session = false;
+//var wayf_force_remember_for_session = false;
 //	var wayf_force_remember_for_session = true;
+var wayf_force_remember_for_session = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_force_remember_for_session'); ?>";
 
 // Logo size
 // Choose whether the small or large logo shall be used
@@ -250,6 +254,7 @@ var wayf_overwrite_intro_text = '<?php echo __d('auth_shibboleth', '所属機関
 //        SAML1SSOurl:"https://other.univ.edu/shibboleth-idp/SSO"},
 // ];
 //	var wayf_additional_idps = [ ];
+var wayf_additional_idps = [<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_additional_idps'); ?>];
 
 // ###################################
 // # for test-ds only
@@ -281,7 +286,12 @@ var wayf_use_disco_feed = true;
 // var wayf_discofeed_url = "https://point.switch.ch/Shibboleth.sso/DiscoFeed";
 // [Optional, commented out by default]
 // var wayf_discofeed_url = "";
-var wayf_discofeed_url = "https://office.gakunin.nii.ac.jp/TestFed/export/discofeed/TS0559JP";
+//var wayf_discofeed_url = "https://office.gakunin.nii.ac.jp/TestFed/export/discofeed/TS0559JP";
+<?php
+if (SiteSettingUtil::read('AuthShibboleth.wayf_discofeed_url')) {
+	echo 'var wayf_discofeed_url = "' . SiteSettingUtil::read('AuthShibboleth.wayf_discofeed_url') . '"';
+}
+?>
 
 // The path of Cookie created by SP is set. As for default configuration,
 // the path of an access place is set.
@@ -338,7 +348,7 @@ var wayf_discofeed_url = "https://office.gakunin.nii.ac.jp/TestFed/export/discof
 	is logged in into your application.
 	-->
 	<p>
-		<strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="<?php echo $baseUrl; ?>Shibboleth.sso/DS?target=">proceed manually</a>.
+		<strong>Login:</strong> Javascript is not available for your web browser. Therefore, please <a href="<?php echo Router::url('/', true); ?>Shibboleth.sso/DS?target=">proceed manually</a>.
 	</p>
 </noscript>
 

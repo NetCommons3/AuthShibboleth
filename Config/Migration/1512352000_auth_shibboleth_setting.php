@@ -52,7 +52,13 @@ class AuthShibbolethSetting extends NetCommonsMigration {
 				'key' => 'AuthShibboleth.auth_type_shibbloth_location',
 				'value' => '/secure',
 			),
-			// ** 学認DS
+			// ** IdPによる個人識別番号に利用する項目
+			array(
+				'language_id' => 0,
+				'key' => 'AuthShibboleth.idp_userid',
+				'value' => 'eppn',
+			),
+			// ** 学認 Embedded DS
 			// *** WAYF URL
 			array(
 				'language_id' => 0,
@@ -86,6 +92,12 @@ class AuthShibbolethSetting extends NetCommonsMigration {
 				'key' => 'AuthShibboleth.wayf_force_remember_for_session',
 				'value' => '0',
 			),
+			// *** 表示IdP絞り込みDiscpFeed URL
+			array(
+				'language_id' => 0,
+				'key' => 'AuthShibboleth.wayf_discofeed_url',
+				'value' => '',
+			),
 			// *** 他のフェデレーションのIdPを追加する
 			array(
 				'language_id' => 0,
@@ -113,7 +125,12 @@ class AuthShibbolethSetting extends NetCommonsMigration {
  */
 	public function after($direction) {
 		if ($direction === 'down') {
-			// [まだ] プラグインアンインストール時は、'key' => 'AuthShibboleth.xxxx'は消したい
+			// [プラグインアンインストール時は、'key' => 'AuthShibboleth.xxxx'を消す
+			foreach ($this->records as $model => $records) {
+				if (!$this->deleteRecords($model, $records, 'key')) {
+					return false;
+				}
+			}
 			return true;
 		}
 

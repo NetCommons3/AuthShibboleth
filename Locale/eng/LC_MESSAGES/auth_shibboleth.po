@@ -18,3 +18,66 @@ msgstr ""
 
 msgid "Stay logged in"
 msgstr ""
+
+# 設定画面
+## Shibbolethログイン
+msgid "AuthShibboleth.setting.label"
+msgstr ""
+
+msgid "AuthShibboleth.auth_type_shibbloth_location"
+msgstr ""
+
+msgid "AuthShibboleth.auth_type_shibbloth_location.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.idp_userid"
+msgstr ""
+
+msgid "AuthShibboleth.idp_userid.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.idp_userid.help"
+msgstr ""
+
+### 学認 Embedded DS
+msgid "Embedded DS"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_force_remember_for_session"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_URL"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_URL.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_sp_entityID"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_sp_entityID.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_sp_handlerURL"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_sp_handlerURL.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_return_url"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_return_url.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_discofeed_url"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_discofeed_url.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_additional_idps"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_additional_idps.placeholder"
+msgstr ""

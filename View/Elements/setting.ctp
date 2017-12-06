@@ -13,13 +13,22 @@
 
 	<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.auth_type_shibbloth_location', array(
 		'type' => 'text',
-		'label' => __d('auth_shibboleth', 'ウェブサーバに設定したShibboleth認証のロケーション'),
+		'label' => __d('auth_shibboleth', 'AuthShibboleth.auth_type_shibbloth_location'),
+		'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.auth_type_shibbloth_location.placeholder'),
+		'required' => true,
+	)); ?>
+
+	<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.idp_userid', array(
+		'type' => 'text',
+		'label' => __d('auth_shibboleth', 'AuthShibboleth.idp_userid'),
+		'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.idp_userid.placeholder'),
+		'help' => __d('auth_shibboleth', 'AuthShibboleth.idp_userid.help'),
 		'required' => true,
 	)); ?>
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<?php echo __d('auth_shibboleth', '学認DS'); ?>
+			<?php echo __d('auth_shibboleth', 'Embedded DS'); ?>
 		</div>
 
 		<div class="panel-body">
@@ -29,38 +38,48 @@
 					'1' => __d('net_commons', 'Yes'),
 					'0' => __d('net_commons', 'No'),
 				),
-				'label' => __d('auth_shibboleth', '%s にチェックを入れて操作させない',
+				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_force_remember_for_session',
 					__d('auth_shibboleth', 'Stay logged in')),
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_URL', array(
 				'type' => 'text',
-				'label' => __d('auth_shibboleth', 'WAYF URL'),
+				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_URL'),
+				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_URL.placeholder'),
 				'required' => true,
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_sp_entityID', array(
 				'type' => 'text',
-				'label' => __d('auth_shibboleth', 'エンティティID'),
+				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_entityID'),
+				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_entityID.placeholder'),
 				'required' => true,
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_sp_handlerURL', array(
 				'type' => 'text',
-				'label' => __d('auth_shibboleth', 'Shibboleth SPのハンドラURL'),
+				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_handlerURL'),
+				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_handlerURL.placeholder'),
 				'required' => true,
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_return_url', array(
 				'type' => 'text',
-				'label' => __d('auth_shibboleth', '認証後に開くURL'),
+				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_return_url'),
+				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_return_url.placeholder'),
 				'required' => true,
+			)); ?>
+
+			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_discofeed_url', array(
+				'type' => 'text',
+				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_discofeed_url'),
+				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_discofeed_url.placeholder'),
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_additional_idps', array(
 				'type' => 'textarea',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_additional_idps'),
-				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_additional_idps.help'),
+				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_additional_idps.placeholder'),
 			)); ?>
 		</div>
 	</div>

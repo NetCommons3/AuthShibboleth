@@ -66,7 +66,9 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  * @return CakeResponse
  **/
 	public function secure() {
-		$this->request->base = str_replace(AuthShibbolethComponent::SHIBBOLETH_LOCATION, '', $this->request->base);
+		// ** ウェブサーバに設定したShibboleth認証のロケーション
+		$shibblothLocation = SiteSettingUtil::read('AuthShibboleth.auth_type_shibbloth_location');
+		$this->request->base = str_replace($shibblothLocation, '', $this->request->base);
 		$baseUrl = Router::url('/', true);
 		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/mapping';
 
