@@ -30,15 +30,12 @@ class AuthShibbolethValidateBehavior extends SiteSettingValidateBehavior {
  * @return array リクエストデータ
  */
 	public function validateAuthShibboleth(Model $model, $data) {
-		if (! isset($data[$model->alias]['AuthShibboleth.auth_type_shibbloth_location'])) {
+		if (! isset($data[$model->alias]['AuthShibboleth.idp_userid'])) {
 			return $data;
 		}
 
 		//ログイン設定
 		// * shibbolethログイン
-		// ** ウェブサーバに設定したShibboleth認証のロケーション
-		$this->_validateRequired($model, $data, 'AuthShibboleth.auth_type_shibbloth_location');
-
 		// **  IdPによる個人識別番号に利用する項目
 		$this->_validateRequired($model, $data, 'AuthShibboleth.idp_userid');
 
@@ -66,6 +63,10 @@ class AuthShibbolethValidateBehavior extends SiteSettingValidateBehavior {
 		$this->_validateRequired($model, $data, 'AuthShibboleth.wayf_return_url');
 		$this->__validateUrl($model, $data, 'AuthShibboleth.wayf_return_url');
 
+		// **** ベースURL
+		$this->_validateRequired($model, $data, 'AuthShibboleth.base_url');
+		$this->__validateUrl($model, $data, 'AuthShibboleth.base_url');
+
 		// *** DiscpFeed URL
 		$this->__validateUrl($model, $data, 'AuthShibboleth.wayf_discofeed_url');
 
@@ -84,7 +85,13 @@ class AuthShibbolethValidateBehavior extends SiteSettingValidateBehavior {
 		if (! isset($data[$model->alias][$key])) {
 			return $data;
 		}
+
 		foreach ($data[$model->alias][$key] as $check) {
+			// 空ならチェックしない
+			if (! $check['value']) {
+				return $data;
+			}
+
 			if (! Validation::url($check['value'], true)) {
 				$this->_setValidationMessage($model, $key, $check['language_id'],
 					sprintf(

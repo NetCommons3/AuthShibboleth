@@ -11,13 +11,6 @@
 
 <article>
 
-	<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.auth_type_shibbloth_location', array(
-		'type' => 'text',
-		'label' => __d('auth_shibboleth', 'AuthShibboleth.auth_type_shibbloth_location'),
-		'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.auth_type_shibbloth_location.placeholder'),
-		'required' => true,
-	)); ?>
-
 	<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.idp_userid', array(
 		'type' => 'text',
 		'label' => __d('auth_shibboleth', 'AuthShibboleth.idp_userid'),
@@ -46,6 +39,7 @@
 				'type' => 'text',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_URL'),
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_URL.placeholder'),
+				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_URL.help'),
 				'required' => true,
 			)); ?>
 
@@ -69,6 +63,18 @@
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_return_url.placeholder'),
 				'required' => true,
 			)); ?>
+
+			<div class="row">
+				<div class="col-xs-offset-1 col-xs-11">
+					<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.base_url', array(
+						'type' => 'text',
+						'label' => __d('auth_shibboleth', 'AuthShibboleth.base_url'),
+						'placeholder' => Router::url('/', true),
+						'help' => __d('auth_shibboleth', 'AuthShibboleth.base_url.help'),
+						'required' => true,
+					)); ?>
+				</div>
+			</div>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_discofeed_url', array(
 				'type' => 'text',

@@ -66,10 +66,8 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  * @return CakeResponse
  **/
 	public function secure() {
-		// ** ウェブサーバに設定したShibboleth認証のロケーション
-		$shibblothLocation = SiteSettingUtil::read('AuthShibboleth.auth_type_shibbloth_location');
-		$this->request->base = str_replace($shibblothLocation, '', $this->request->base);
-		$baseUrl = Router::url('/', true);
+		// ベースURL（認証後のURLを開いた後のリダイレクトに利用します）
+		$baseUrl = SiteSettingUtil::read('AuthShibboleth.base_url');
 		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/mapping';
 
 		// IdPのユーザ情報 セット
@@ -81,11 +79,10 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 			return $this->redirect($redirect);
 		}
 
+		// [まだ] DS login_wayf_not_auto_loginのON、OFF処理
 		//$session->setParameter("login_wayf_not_auto_login", _ON);
 		//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
 
-		//$url = BASE_URL_HTTPS . "/Shibboleth.sso/Logout?return=" . rawurlencode(BASE_URL);
-		//$commonMain->redirectHeader($url, 10, $errStr);
 		$returnUrl = $baseUrl . 'auth/login';
 		$redirect = $baseUrl . 'Shibboleth.sso/Logout?return=' . $returnUrl;
 

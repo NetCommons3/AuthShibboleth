@@ -46,12 +46,6 @@ class AuthShibbolethSetting extends NetCommonsMigration {
 		'SiteSetting' => array(
 			//ログイン設定
 			// * shibbolethログイン
-			// ** ウェブサーバに設定したShibboleth認証のロケーション
-			array(
-				'language_id' => 0,
-				'key' => 'AuthShibboleth.auth_type_shibbloth_location',
-				'value' => '/secure',
-			),
 			// ** IdPによる個人識別番号に利用する項目
 			array(
 				'language_id' => 0,
@@ -84,6 +78,13 @@ class AuthShibbolethSetting extends NetCommonsMigration {
 				'language_id' => 0,
 				'key' => 'AuthShibboleth.wayf_return_url',
 				'value' => 'https://example.com/secure/index.php',
+				// $this->after()でvalueを置換
+			),
+			// **** ベースURL（認証後のURLを開いた後のリダイレクトに利用します）
+			array(
+				'language_id' => 0,
+				'key' => 'AuthShibboleth.base_url',
+				'value' => 'https://example.com/',
 				// $this->after()でvalueを置換
 			),
 			// *** ログインしたままにする にチェックを入れて操作させない

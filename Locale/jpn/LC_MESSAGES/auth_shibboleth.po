@@ -24,12 +24,6 @@ msgstr "ログインしたままにする"
 msgid "AuthShibboleth.setting.label"
 msgstr "Shibbolethログイン"
 
-msgid "AuthShibboleth.auth_type_shibbloth_location"
-msgstr "ウェブサーバに設定したShibboleth認証のロケーション"
-
-msgid "AuthShibboleth.auth_type_shibbloth_location.placeholder"
-msgstr "/secure"
-
 msgid "AuthShibboleth.idp_userid"
 msgstr "IdPによる個人識別番号に利用する項目"
 
@@ -52,6 +46,9 @@ msgstr "WAYF URL"
 msgid "AuthShibboleth.wayf_URL.placeholder"
 msgstr "https://ds.gakunin.nii.ac.jp/WAYF"
 
+msgid "AuthShibboleth.wayf_URL.help"
+msgstr "WAYF URLによってフェデレーションのIdPを表示します。"
+
 msgid "AuthShibboleth.wayf_sp_entityID"
 msgstr "SPのエンティティID"
 
@@ -70,6 +67,12 @@ msgstr "認証後に開くURL"
 msgid "AuthShibboleth.wayf_return_url.placeholder"
 msgstr "https://example.com/secure/index.php"
 
+msgid "AuthShibboleth.base_url"
+msgstr "ベースURL"
+
+msgid "AuthShibboleth.base_url.help"
+msgstr "認証後のURLを開いた後のリダイレクトに利用します。"
+
 msgid "AuthShibboleth.wayf_discofeed_url"
 msgstr "DiscpFeed URL"
 
@@ -77,7 +80,7 @@ msgid "AuthShibboleth.wayf_discofeed_url.placeholder"
 msgstr "https://office.gakunin.nii.ac.jp/ProdFed/export/discofeed/PS0NNNJP"
 
 msgid "AuthShibboleth.wayf_discofeed_url.help"
-msgstr "設定したDiscpFeed URLによって表示IdPを絞り込めます。"
+msgstr "DiscpFeed URLによって表示IdPを絞り込めます。"
 
 msgid "AuthShibboleth.wayf_additional_idps"
 msgstr "他のフェデレーションのIdPを追加する"
