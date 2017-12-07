@@ -37,11 +37,11 @@ msgid "AuthShibboleth.idp_userid.placeholder"
 msgstr "eppn"
 
 msgid "AuthShibboleth.idp_userid.help"
-msgstr "上記かpersistent-idを、IdPによる個人識別番号として利用します。"
+msgstr "上記かpersistent-idをIdPによる個人識別番号として利用します。"
 
-### 学認 Embedded DS
+### Embedded DS
 msgid "Embedded DS"
-msgstr "学認 Embedded DS"
+msgstr ""
 
 msgid "AuthShibboleth.wayf_force_remember_for_session"
 msgstr "%s にチェックを入れたままにする"
@@ -53,13 +53,13 @@ msgid "AuthShibboleth.wayf_URL.placeholder"
 msgstr "https://ds.gakunin.nii.ac.jp/WAYF"
 
 msgid "AuthShibboleth.wayf_sp_entityID"
-msgstr "エンティティID"
+msgstr "SPのエンティティID"
 
 msgid "AuthShibboleth.wayf_sp_entityID.placeholder"
 msgstr "https://example.com/shibboleth-sp"
 
 msgid "AuthShibboleth.wayf_sp_handlerURL"
-msgstr "Shibboleth SPのハンドラURL"
+msgstr "SPのハンドラURL"
 
 msgid "AuthShibboleth.wayf_sp_handlerURL.placeholder"
 msgstr "https://example.com/Shibboleth.sso"
@@ -71,10 +71,13 @@ msgid "AuthShibboleth.wayf_return_url.placeholder"
 msgstr "https://example.com/secure/index.php"
 
 msgid "AuthShibboleth.wayf_discofeed_url"
-msgstr "表示IdP絞り込みDiscpFeed URL"
+msgstr "DiscpFeed URL"
 
 msgid "AuthShibboleth.wayf_discofeed_url.placeholder"
 msgstr "https://office.gakunin.nii.ac.jp/ProdFed/export/discofeed/PS0NNNJP"
+
+msgid "AuthShibboleth.wayf_discofeed_url.help"
+msgstr "設定したDiscpFeed URLによって表示IdPを絞り込めます。"
 
 msgid "AuthShibboleth.wayf_additional_idps"
 msgstr "他のフェデレーションのIdPを追加する"
@@ -86,3 +89,7 @@ msgstr ""
 "  , entityID: \"https://other.univ.edu/idp/shibboleth\"\n"
 "  , SAML1SSOurl: \"https://other.univ.edu/shibboleth-idp/SSO\"\n"
 "},"
+
+## validate
+msgid "URL"
+msgstr ""

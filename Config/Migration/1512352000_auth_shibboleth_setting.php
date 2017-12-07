@@ -58,7 +58,7 @@ class AuthShibbolethSetting extends NetCommonsMigration {
 				'key' => 'AuthShibboleth.idp_userid',
 				'value' => 'eppn',
 			),
-			// ** 学認 Embedded DS
+			// ** Embedded DS
 			// *** WAYF URL
 			array(
 				'language_id' => 0,
@@ -92,7 +92,7 @@ class AuthShibbolethSetting extends NetCommonsMigration {
 				'key' => 'AuthShibboleth.wayf_force_remember_for_session',
 				'value' => '0',
 			),
-			// *** 表示IdP絞り込みDiscpFeed URL
+			// *** DiscpFeed URL
 			array(
 				'language_id' => 0,
 				'key' => 'AuthShibboleth.wayf_discofeed_url',

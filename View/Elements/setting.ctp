@@ -74,6 +74,7 @@
 				'type' => 'text',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_discofeed_url'),
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_discofeed_url.placeholder'),
+				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_discofeed_url.help'),
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_additional_idps', array(

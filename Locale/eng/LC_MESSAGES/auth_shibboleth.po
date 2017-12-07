@@ -39,7 +39,7 @@ msgstr ""
 msgid "AuthShibboleth.idp_userid.help"
 msgstr ""
 
-### 学認 Embedded DS
+### Embedded DS
 msgid "Embedded DS"
 msgstr ""
 
@@ -76,8 +76,15 @@ msgstr ""
 msgid "AuthShibboleth.wayf_discofeed_url.placeholder"
 msgstr ""
 
+msgid "AuthShibboleth.wayf_discofeed_url.help"
+msgstr ""
+
 msgid "AuthShibboleth.wayf_additional_idps"
 msgstr ""
 
 msgid "AuthShibboleth.wayf_additional_idps.placeholder"
+msgstr ""
+
+## validate
+msgid "URL"
 msgstr ""
