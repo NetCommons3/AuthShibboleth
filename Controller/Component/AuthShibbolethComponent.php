@@ -35,11 +35,6 @@ class AuthShibbolethComponent extends Component {
 	public $persistentId = null;
 
 /**
- * @var array プロフィール情報。shibbolethログインで取得できる情報の配列
- */
-	public $profile = array();
-
-/**
  * Other components
  *
  * @var array
