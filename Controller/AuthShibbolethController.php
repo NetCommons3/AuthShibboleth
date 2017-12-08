@@ -47,16 +47,16 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  **/
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('secure', 'ds', 'mapping');
+		$this->Auth->allow('secure', 'discovery', 'mapping');
 	}
 
 /**
  * 学認Embedded DS表示（URLで直接開く）
- * https://example.com/auth_shibboleth/auth_shibboleth/ds
+ * https://example.com/auth_shibboleth/auth_shibboleth/discovery
  *
  * @return void
  **/
-	public function ds() {
+	public function discovery() {
 		$this->view = 'AuthShibboleth.AuthShibboleth/ds';
 	}
 

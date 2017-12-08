@@ -186,7 +186,7 @@ class AuthShibbolethComponent extends Component {
  *
  * @param int $userId ユーザID
  * @return void
- * @throws BadRequestException
+ * @throws UnauthorizedException
  */
 	public function saveUserMapping($userId) {
 		// IdPによる個人識別番号 で取得
@@ -195,7 +195,6 @@ class AuthShibbolethComponent extends Component {
 		if (! $idpUser) {
 			// 外部ID連携 保存
 			$data = array(
-				//'user_id' => $this->_controller->Auth->user('id'),
 				'user_id' => $userId,
 				'idp_userid' => $this->getIdpUserid(),		// IdPによる個人識別番号
 				'is_shib_eptid' => $this->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
@@ -205,7 +204,7 @@ class AuthShibbolethComponent extends Component {
 			);
 			$idpUser = $this->_controller->IdpUser->saveIdpUser($data);
 			if (! $idpUser) {
-				throw new BadRequestException(print_r($this->_controller->IdpUser->validationErrors, true));
+				throw new UnauthorizedException();
 			}
 		}
 
@@ -220,8 +219,7 @@ class AuthShibbolethComponent extends Component {
 		}
 		$IdpUserProfile = $this->_controller->IdpUserProfile->saveIdpUserProfile($data);
 		if (! $IdpUserProfile) {
-			throw new BadRequestException(
-				print_r($this->_controller->IdpUserProfile->validationErrors, true));
+			throw new UnauthorizedException();
 		}
 
 		// ユーザ紐づけ済みのため、セッション初期化
