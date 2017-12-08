@@ -220,7 +220,8 @@ class AuthShibbolethComponent extends Component {
 		}
 		$IdpUserProfile = $this->_controller->IdpUserProfile->saveIdpUserProfile($data);
 		if (! $IdpUserProfile) {
-			throw new BadRequestException(print_r($this->_controller->IdpUserProfile->validationErrors, true));
+			throw new BadRequestException(
+				print_r($this->_controller->IdpUserProfile->validationErrors, true));
 		}
 
 		// ユーザ紐づけ済みのため、セッション初期化

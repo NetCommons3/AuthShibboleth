@@ -41,7 +41,8 @@ class AuthShibbolethValidateBehavior extends SiteSettingValidateBehavior {
 
 		// ** Embedded DS
 		// *** ログインしたままにする にチェックを入れて操作させない
-		$value = (string)Hash::get($data[$model->alias]['AuthShibboleth.wayf_force_remember_for_session'], '0.value');
+		$value = (string)Hash::get(
+			$data[$model->alias]['AuthShibboleth.wayf_force_remember_for_session'], '0.value');
 		if (! in_array($value, ['0', '1'], true)) {
 			$this->_setValidationMessage($model, 'AuthShibboleth.wayf_force_remember_for_session', '0',
 				__d('net_commons', 'Invalid request.'));
