@@ -69,6 +69,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		// ベースURL（認証後のURLを開いた後のリダイレクトに利用します）
 		$baseUrl = SiteSettingUtil::read('AuthShibboleth.base_url');
 		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/mapping';
+		$this->Session->delete('AuthShibboleth.wayfAutoLogin');
 
 		// IdPのユーザ情報 セット
 		$this->AuthShibboleth->setIdpUserData();
@@ -79,9 +80,8 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 			return $this->redirect($redirect);
 		}
 
-		// [まだ] DS login_wayf_not_auto_loginのON、OFF処理
-		//$session->setParameter("login_wayf_not_auto_login", _ON);
-		//$this->Session->write('AuthShibboleth.loginWayfNotAutoLogin', '1');
+		// 必要な属性情報が得られない時は、DSの自動ログインをOFFにする
+		$this->Session->write('AuthShibboleth.wayfAutoLogin', false);
 
 		$returnUrl = $baseUrl . 'auth/login';
 		$redirect = $baseUrl . 'Shibboleth.sso/Logout?return=' . $returnUrl;

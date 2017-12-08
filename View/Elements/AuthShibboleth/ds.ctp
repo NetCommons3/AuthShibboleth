@@ -14,6 +14,11 @@
 if (! isset($wayfBorderColor)) {
 	$wayfBorderColor = '#F4F7F7';
 }
+
+$wayfAutoLogin = CakeSession::read('AuthShibboleth.wayfAutoLogin');
+if (is_null($wayfAutoLogin)) {
+	$wayfAutoLogin = true;
+}
 ?>
 
 <!-- EMBEDDED-WAYF-START -->
@@ -118,7 +123,13 @@ var wayf_background_color = '#FFF';
 // Whether to automatically log in user if he has a session/permanent redirect
 // cookie set at central wayf
 // [Optional, default: true]
-var wayf_auto_login = true;
+<?php
+if ($wayfAutoLogin) {
+	echo 'var wayf_auto_login = true;';
+} else {
+	echo 'var wayf_auto_login = false;';
+}
+?>
 
 // Whether to hide the WAYF after the user was logged in
 // This requires that the _shib_session_* cookie is set when a user

@@ -94,9 +94,6 @@ class AuthShibbolethComponent extends Component {
 				break;
 			}
 		}
-		//$session->removeParameter("login_wayf_not_auto_login");
-		//$this->Session->delete('AuthShibboleth.loginWayfNotAutoLogin');
-		//return true;
 
 		if (! $this->isIdpUserid()) {
 			return;
