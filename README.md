@@ -13,3 +13,21 @@ AuthShibbolethプラグインは、shibbolethログインをすることがで�
 
 * NetCommon3.1.7以降に対応
 * 別途、Shibooleth SPの導入が必要です。
+
+### 画面
+
+![Shiboolethログイン](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth.png)
+![ユーザ紐づけ](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth2.png)
+![Shiboolethログイン設定](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth3.png)
+
+### インストール
+
+* プラグインを配置
+* copyToDocumentRoot をドキュメントルートにコピー
+* マイグレーションrun all実行
+
+### アンインストール
+
+* マイグレーションdownを数回実行
+* copyToDocumentRoot のファイルを削除。htaccessを元に戻す
+* プラグインを削除
