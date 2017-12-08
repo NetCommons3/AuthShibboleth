@@ -48,7 +48,6 @@ class AuthShibbolethSettingComponent extends Component {
 			// したけど、AuthLdapはしてないとか、そんな状況になりそうだなぁ。
 			$this->_controller->SiteSetting->validatePlugins = array('AuthShibboleth');
 
-			// [まだ] 保存すると空の1行が余計に登録される
 			//登録処理
 			$this->_controller->SiteManager->saveData();
 
