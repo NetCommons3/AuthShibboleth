@@ -18,11 +18,6 @@ App::uses('AuthShibbolethAppModel', 'AuthShibboleth.Model');
  */
 class IdpUser extends AuthShibbolethAppModel {
 
-	///**
-	// * @var string 表示順 新着順
-	// */
-	//	const DISPLAY_ORDER_NEW = 'new';
-
 /**
  * Validation rules
  *
@@ -92,54 +87,12 @@ class IdpUser extends AuthShibbolethAppModel {
 		)
 	);
 
-	///**
-	// * belongsTo associations
-	// *
-	// * @var array
-	// */
-	//	public $belongsTo = array(
-	//		'Frame' => array(
-	//			'className' => 'Frames.Frame',
-	//			'foreignKey' => false,
-	//			'conditions' => array(
-	//				'Frame.key = VideoFrameSetting.frame_key',
-	//			),
-	//			'fields' => 'block_id',
-	//			'order' => ''
-	//		),
-	//	);
-
-	///**
-	// * VideoFrameSettingデータ取得
-	// *
-	// * @param bool $created If True, the results of the Model::find() to create it if it was null
-	// * @return array
-	// */
-	//	public function getVideoFrameSetting($created) {
-	//		$conditions = array(
-	//			'frame_key' => Current::read('Frame.key')
-	//		);
-	//
-	//		$videoFrameSetting = $this->find('first', array(
-	//			'recursive' => -1,
-	//			'conditions' => $conditions,
-	//		));
-	//
-	//		if ($created && ! $videoFrameSetting) {
-	//			$videoFrameSetting = $this->create(array(
-	//				'frame_key' => Current::read('Frame.key'),
-	//			));
-	//		}
-	//
-	//		return $videoFrameSetting;
-	//	}
-
 /**
  * 外部ID連携 データ保存
  *
  * @param array $data received post data
  * @return mixed On success Model::$data if its not empty or true, false on failure
- * @throws InternalErrorException
+ * @throws InternalErrorException|Exception
  */
 	public function saveIdpUser($data) {
 		//トランザクションBegin
