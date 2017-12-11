@@ -9,10 +9,12 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 ?>
 
 <div class="container">
-	<div style="border-bottom: solid 1px #ddd;">
+	<div class="auth-shibboleth-mapping-title">
 		<h2>
 			<?php echo __d('auth_shibboleth', 'Do you associate the ID of %s you always use?', SiteSettingUtil::read('App.site_name')); ?>
 		</h2>
@@ -21,8 +23,8 @@
 		</p>
 	</div>
 
-	<div class="row" style="display: flex; flex-wrap: wrap;">
-		<div class="col-xs-6" style="border-right: solid 1px #ddd;">
+	<div class="row auth-shibboleth-mapping-main">
+		<div class="col-xs-6 auth-shibboleth-mapping-login">
 			<br />
 			<p>
 				<?php echo __d('auth_shibboleth', 'Please login with the ID of %s.', SiteSettingUtil::read('App.site_name')); ?>

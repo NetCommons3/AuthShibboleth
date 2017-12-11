@@ -1,0 +1,26 @@
+/**
+ * auth_shibboleth/css/style.css
+ *
+ * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
+ */
+
+/*
+ * --- ユーザ紐づけ画面
+ */
+/* タイトルエリア */
+div.auth-shibboleth-mapping-title {
+	border-bottom: solid 1px #ddd;
+}
+
+/* メインエリア */
+div.auth-shibboleth-mapping-main {
+	display: flex; flex-wrap: wrap;
+}
+
+/* ログインエリア */
+div.auth-shibboleth-mapping-login {
+	border-right: solid 1px #ddd;
+}
