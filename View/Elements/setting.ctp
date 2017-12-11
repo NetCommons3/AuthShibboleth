@@ -32,7 +32,7 @@
 					'0' => __d('net_commons', 'No'),
 				),
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_force_remember_for_session',
-					__d('auth_shibboleth', 'Stay logged in')),
+					__d('auth_shibboleth', 'Keep me logged in')),
 			)); ?>
 
 			<?php echo $this->SystemManager->inputCommon('SiteSetting', 'AuthShibboleth.wayf_URL', array(

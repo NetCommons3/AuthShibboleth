@@ -208,17 +208,17 @@ var wayf_show_categories =  true;
 // wayf_show_remember_checkbox is set to true
 // [Optional, commented out by default]
 // var wayf_overwrite_checkbox_label_text = 'Save setting for today';
-var wayf_overwrite_checkbox_label_text = '<?php echo __d('auth_shibboleth', 'Stay logged in'); ?>';
+var wayf_overwrite_checkbox_label_text = '<?php echo __d('auth_shibboleth', 'Keep me logged in'); ?>';
 
 // Overwrites the text of the submit button
 // [Optional, commented out by default]
 // var wayf_overwrite_submit_button_text = 'Go';
-var wayf_overwrite_submit_button_text = '<?php echo __d('auth_shibboleth', '選択'); ?>';
+var wayf_overwrite_submit_button_text = '<?php echo __d('auth_shibboleth', 'Go'); ?>';
 
 // Overwrites the intro text above the drop-down list
 // [Optional, commented out by default]
 // var wayf_overwrite_intro_text = 'Select your Home Organisation to log in';
-var wayf_overwrite_intro_text = '<?php echo __d('auth_shibboleth', '所属機関:'); ?>';
+var wayf_overwrite_intro_text = '<?php echo __d('auth_shibboleth', 'Organization:'); ?>';
 
 // Overwrites the category name of the most used IdP category in the drop-down list
 // [Optional, commented out by default]

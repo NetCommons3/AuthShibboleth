@@ -16,7 +16,35 @@ msgstr ""
 msgid "Auth Shibboleth"
 msgstr ""
 
-msgid "Stay logged in"
+msgid "Shibboleth login by IdP of other agencies"
+msgstr ""
+
+msgid "Keep me logged in"
+msgstr ""
+
+msgid "Go"
+msgstr ""
+
+msgid "Organization:"
+msgstr ""
+
+msgid "AuthShibboleth.login.failure"
+msgstr ""
+
+msgid "AuthShibboleth.login.success"
+msgstr ""
+
+# ユーザ紐づけ画面
+msgid "Do you associate the ID of %s you always use?"
+msgstr ""
+
+msgid "You can associate the ID of the specified service with the ID of %s."
+msgstr ""
+
+msgid "Please login with the ID of %s."
+msgstr ""
+
+msgid "Still, if you do not have an account in% s, please proceed to the new registration."
 msgstr ""
 
 # 設定画面
@@ -44,6 +72,9 @@ msgid "AuthShibboleth.wayf_URL"
 msgstr ""
 
 msgid "AuthShibboleth.wayf_URL.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_URL.help"
 msgstr ""
 
 msgid "AuthShibboleth.wayf_sp_entityID"

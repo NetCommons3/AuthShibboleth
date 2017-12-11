@@ -14,10 +14,10 @@
 <div class="container">
 	<div style="border-bottom: solid 1px #ddd;">
 		<h2>
-			<?php echo __d('auth_shibboleth', 'いつも利用している%sのIDを関連づけますか。', SiteSettingUtil::read('App.site_name')); ?>
+			<?php echo __d('auth_shibboleth', 'Do you associate the ID of %s you always use?', SiteSettingUtil::read('App.site_name')); ?>
 		</h2>
 		<p>
-			<?php echo __d('auth_shibboleth', '指定されたサービスのIDと%sのIDを関連付けることができます。', SiteSettingUtil::read('App.site_name')); ?>
+			<?php echo __d('auth_shibboleth', 'You can associate the ID of the specified service with the ID of %s.', SiteSettingUtil::read('App.site_name')); ?>
 		</p>
 	</div>
 
@@ -25,7 +25,7 @@
 		<div class="col-xs-6" style="border-right: solid 1px #ddd;">
 			<br />
 			<p>
-				<?php echo __d('auth_shibboleth', '%sのIDでログインしてください。', SiteSettingUtil::read('App.site_name')); ?>
+				<?php echo __d('auth_shibboleth', 'Please login with the ID of %s.', SiteSettingUtil::read('App.site_name')); ?>
 			</p>
 
 			<article>
@@ -76,16 +76,6 @@
 						<?php echo __d('auth', 'Login'); ?>
 					</button>
 
-<!--					<hr>-->
-<!---->
-<!--					--><?php //if ($isMailSend && ! SiteSettingUtil::read('App.close_site') && SiteSettingUtil::read('ForgotPass.use_password_reissue')) : ?>
-<!--						<div>-->
-<!--							--><?php //echo $this->NetCommonsHtml->link(
-//								__d('auth', 'Forgot your Password? Please click here.'),
-//								array('plugin' => 'auth', 'controller' => 'forgot_pass', 'action' => 'request')
-//							); ?>
-<!--						</div>-->
-<!--					--><?php //endif; ?>
 				</div>
 				<?php echo $this->NetCommonsForm->end(); ?>
 
@@ -97,12 +87,12 @@
 			<br />
 			<p>
 				<?php echo __d('auth_shibboleth',
-					'まだ、%sにアカウントをお持ちでない方は、新規登録にお進みください。',
+					'Still, if you do not have an account in% s, please proceed to the new registration.',
 					SiteSettingUtil::read('App.site_name')); ?>
 			</p>
 
 			<a href="/auth_shibboleth/auth_shibboleth_auto_user_regist/request" class="btn btn-default btn-block">
-				<?php echo __d('auth_shibboleth', '新規登録'); ?>
+				<?php echo __d('auth', 'Sign up'); ?>
 			</a>
 		</div>
 	</div>

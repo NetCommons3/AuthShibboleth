@@ -32,7 +32,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 	);
 
 /**
- * Other components
+ * use component
  *
  * @var array
  */
@@ -86,10 +86,9 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		$returnUrl = $baseUrl . 'auth/login';
 		$redirect = $baseUrl . 'Shibboleth.sso/Logout?return=' . $returnUrl;
 
-		// NC2メッセージ　login_error_externalId = "選択した所属機関認証システムから必要な属性情報が得られないため、<br />ログインすることができません。<br /><div style='margin-top:15px;'>選択した所属機関認証システムの管理者にお問い合わせください。</div>"
 		// メッセージ表示
 		$this->NetCommons->setFlashNotification(
-			__d('auth_shibboleth', '選択した所属機関認証システムから必要な属性情報が得られないため、ログインすることができません。選択した所属機関認証システムの管理者にお問い合わせください。'),
+			__d('auth_shibboleth', 'AuthShibboleth.login.failure'),
 			array(
 				'class' => 'danger',
 				'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
@@ -104,7 +103,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 /**
  * ユーザ紐づけ
  *
- * @return CakeResponse
+ * @return void
  **/
 	public function mapping() {
 		//メールを送れるかどうか
@@ -165,10 +164,9 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 				$this->Session->write('Config.language', $this->Auth->user('language'));
 			}
 
-			// login_logging_announce = "すべてのブラウザを閉じるまで「ログイン認証済み」となります。<br /><br style='line-height:16px;' />他者が使用する可能性のあるパソコンで接続した場合は、<br />席を立つ前に<span style='text-decoration:underline;'>必ずすべてのブラウザを閉じてください。</span>"
 			// メッセージ表示
 			$this->NetCommons->setFlashNotification(
-				__d('auth_shibboleth', 'すべてのブラウザを閉じるまで「ログイン認証済み」となります。他者が使用する可能性のあるパソコンで接続した場合は、席を立つ前に必ずすべてのブラウザを閉じてください。'),
+				__d('auth_shibboleth', 'AuthShibboleth.login.success'),
 				array(
 					'class' => 'success',
 					'interval' => 4000,

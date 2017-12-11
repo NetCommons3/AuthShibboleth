@@ -10,7 +10,7 @@
 ?>
 
 <h2>
-	<?php echo __d('auth_shibboleth', '他の機関のIdPによるShibbolethログイン'); ?>
+	<?php echo __d('auth_shibboleth', 'Shibboleth login by IdP of other agencies'); ?>
 </h2>
 
 <?php /* DS説明 */ ?>
