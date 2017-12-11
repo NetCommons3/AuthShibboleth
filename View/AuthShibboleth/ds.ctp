@@ -13,11 +13,6 @@
 	<?php echo __d('auth_shibboleth', 'Shibboleth login by IdP of other agencies'); ?>
 </h2>
 
-<?php /* DS説明 */ ?>
-<!--<div class="well well-sm">-->
-<!--	--><?php //echo __d('auth_shibboleth', 'AuthShibboleth.ds_description'); ?>
-<!--</div>-->
-
 <?php /* DS */ ?>
 <?php echo $this->element('AuthShibboleth.AuthShibboleth/ds', array(
 	'wayfBorderColor' => '#ddd',	// 枠線あり
