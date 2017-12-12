@@ -25,10 +25,9 @@ if (is_null($wayfAutoLogin)) {
 <script type="text/javascript"><!--
 // To use this JavaScript, please access:
 // #####################################################################
-// # 運用ds テンプレート
+// # hon-ds template
 // # https://ds.gakunin.nii.ac.jp/WAYF/embedded-wayf.js/snippet.html
-// #####################################################################
-// # test-ds テンプレート
+// # test-ds template
 // # https://test-ds.gakunin.nii.ac.jp/WAYF/embedded-wayf.js/snippet.html
 // #####################################################################
 // and copy/paste the resulting HTML snippet to an unprotected web page that
@@ -40,31 +39,21 @@ if (is_null($wayfAutoLogin)) {
 // URL of the WAYF to use
 // Examples: "https://wayf.switch.ch/SWITCHaai/WAYF", "https://wayf-test.switch.ch/aaitest/WAYF";
 // [Mandatory]
-//var wayf_URL = "https://ds.gakunin.nii.ac.jp/WAYF";
-//var wayf_URL = "https://test-ds.gakunin.nii.ac.jp/WAYF";
 var wayf_URL = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_URL'); ?>";
 
 // EntityID of the Service Provider that protects this Resource
 // Examples: "https://econf.switch.ch/shibboleth", "https://dokeos.unige.ch/shibboleth"
 // [Mandatory]
-//var wayf_sp_entityID = "https://my-app.switch.ch/shibboleth-sp";
-//var wayf_sp_entityID = "https://e-rad.local:4437/shibboleth-sp";
 var wayf_sp_entityID = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_sp_entityID'); ?>";
 
 // Shibboleth Service Provider handler URL
 // Examples: "https://point.switch.ch/Shibboleth.sso", "https://rr.aai.switch.ch/aaitest/Shibboleth.sso"
 // [Mandatory, if wayf_use_discovery_service = false]
-//var wayf_sp_handlerURL = "https://my-app.switch.ch/Shibboleth.sso";
-//var wayf_sp_handlerURL = "https://e-rad.local:4437/Shibboleth.sso";
 var wayf_sp_handlerURL = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_sp_handlerURL'); ?>";
 
 // URL on this resource that the user shall be returned to after authentication
 // Examples: "https://econf.switch.ch/aai/home", "https://olat.uzh.ch/my/courses"
 // [Mandatory]
-// var wayf_return_url = "https://my-app.switch.ch/aai/index.php?page=show_welcome";
-//var wayf_return_url = "https://my-app.switch.ch/secure/index.php";
-//var wayf_return_url = "https://e-rad.local:4437/secure/shib.php";
-//var wayf_return_url = "https://e-rad.local:4437/secure/index.php";
 var wayf_return_url = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_return_url'); ?>";
 
 
@@ -95,8 +84,6 @@ var wayf_show_remember_checkbox = true;
 //          This option will cause problems that are difficult to find
 //          in case they accidentially select a wrong Home Organisation
 // [Optional, false]
-//var wayf_force_remember_for_session = false;
-//	var wayf_force_remember_for_session = true;
 var wayf_force_remember_for_session = "<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_force_remember_for_session'); ?>";
 
 // Logo size
@@ -207,17 +194,14 @@ var wayf_show_categories =  true;
 // Overwites the text of the checkbox if
 // wayf_show_remember_checkbox is set to true
 // [Optional, commented out by default]
-// var wayf_overwrite_checkbox_label_text = 'Save setting for today';
 var wayf_overwrite_checkbox_label_text = '<?php echo __d('auth_shibboleth', 'Keep me logged in'); ?>';
 
 // Overwrites the text of the submit button
 // [Optional, commented out by default]
-// var wayf_overwrite_submit_button_text = 'Go';
 var wayf_overwrite_submit_button_text = '<?php echo __d('auth_shibboleth', 'Go'); ?>';
 
 // Overwrites the intro text above the drop-down list
 // [Optional, commented out by default]
-// var wayf_overwrite_intro_text = 'Select your Home Organisation to log in';
 var wayf_overwrite_intro_text = '<?php echo __d('auth_shibboleth', 'Organization:'); ?>';
 
 // Overwrites the category name of the most used IdP category in the drop-down list
@@ -264,7 +248,6 @@ var wayf_overwrite_intro_text = '<?php echo __d('auth_shibboleth', 'Organization
 //        entityID:"https://other.univ.edu/idp/shibboleth",
 //        SAML1SSOurl:"https://other.univ.edu/shibboleth-idp/SSO"},
 // ];
-//	var wayf_additional_idps = [ ];
 var wayf_additional_idps = [<?php echo SiteSettingUtil::read('AuthShibboleth.wayf_additional_idps'); ?>];
 
 // ###################################
@@ -290,14 +273,12 @@ var wayf_use_disco_feed = true;
 // [Optional, commented out by default]
 // var wayf_discofeed_url = "/Shibboleth.sso/DiscoFeed";
 // ###################################
-// # for 運用ds comments
+// # for hon-ds comments
 // ###################################
 // The list which is the target of incremental search is extracted to IdP acquired by DiscpFeed
 // URL of DiscpFeed is set up
 // var wayf_discofeed_url = "https://point.switch.ch/Shibboleth.sso/DiscoFeed";
 // [Optional, commented out by default]
-// var wayf_discofeed_url = "";
-//var wayf_discofeed_url = "https://office.gakunin.nii.ac.jp/TestFed/export/discofeed/TS0559JP";
 <?php
 if (SiteSettingUtil::read('AuthShibboleth.wayf_discofeed_url')) {
 	echo 'var wayf_discofeed_url = "' . SiteSettingUtil::read('AuthShibboleth.wayf_discofeed_url') . '"';
