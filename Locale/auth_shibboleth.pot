@@ -44,7 +44,7 @@ msgstr ""
 msgid "Please login with the ID of %s."
 msgstr ""
 
-msgid "Still, if you do not have an account in% s, please proceed to the new registration."
+msgid "Still, if you do not have an account at %s please go to %s."
 msgstr ""
 
 # 設定画面

@@ -44,8 +44,8 @@ msgstr "指定されたサービスのIDと%sのIDを関連付けることがで
 msgid "Please login with the ID of %s."
 msgstr "%sのIDでログインしてください。"
 
-msgid "Still, if you do not have an account in% s, please proceed to the new registration."
-msgstr "まだ、%sにアカウントをお持ちでない方は、新規登録にお進みください。"
+msgid "Still, if you do not have an account at %s please go to %s."
+msgstr "まだ、%sにアカウントをお持ちでない方は、%sにお進みください。"
 
 # 設定画面
 ## Shibbolethログイン

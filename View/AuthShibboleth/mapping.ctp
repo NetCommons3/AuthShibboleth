@@ -89,8 +89,8 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 			<br />
 			<p>
 				<?php echo __d('auth_shibboleth',
-					'Still, if you do not have an account in% s, please proceed to the new registration.',
-					SiteSettingUtil::read('App.site_name')); ?>
+					'Still, if you do not have an account at %s please go to %s.',
+					array(SiteSettingUtil::read('App.site_name')), __d('auth', 'Sign up')); ?>
 			</p>
 
 			<a href="/auth_shibboleth/auth_shibboleth_auto_user_regist/request" class="btn btn-default btn-block">

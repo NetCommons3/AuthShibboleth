@@ -87,7 +87,7 @@ class AuthShibbolethComponent extends Component {
 			$prefix = str_repeat("REDIRECT_", $i);
 			$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
 			$this->__setSession($prefix, $idpUseridSetting);
-			$this->__setSession($prefix, AuthShibbolethComponent::PERSISTENT_ID);
+			$this->__setSession($prefix, self::PERSISTENT_ID);
 
 			$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
 			if ($idpUserid) {
@@ -134,7 +134,7 @@ class AuthShibbolethComponent extends Component {
 	public function isIdpUserid() {
 		$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
 		$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
-		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
+		$persistentId = $this->Session->read('AuthShibboleth.' . self::PERSISTENT_ID);
 		if (is_null($idpUserid) && is_null($persistentId)) {
 			return false;
 		}
@@ -149,7 +149,7 @@ class AuthShibbolethComponent extends Component {
 	public function getIdpUserid() {
 		$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
 		$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
-		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
+		$persistentId = $this->Session->read('AuthShibboleth.' . self::PERSISTENT_ID);
 		if (is_null($idpUserid) && is_null($persistentId)) {
 			// idpUserid=空、persistentId=空
 			return null;
@@ -169,7 +169,7 @@ class AuthShibbolethComponent extends Component {
 	public function isShibEptid() {
 		$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
 		$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
-		$persistentId = $this->Session->read('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID);
+		$persistentId = $this->Session->read('AuthShibboleth.' . self::PERSISTENT_ID);
 		if (is_null($idpUserid) && is_null($persistentId)) {
 			// idpUserid=空、persistentId=空
 			return null;
