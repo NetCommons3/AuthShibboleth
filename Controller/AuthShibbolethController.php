@@ -27,7 +27,6 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  */
 	public $uses = array(
 		'AuthShibboleth.IdpUser',
-		'AuthShibboleth.IdpUserProfile',
 		'Users.User',
 	);
 
@@ -150,8 +149,6 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		$this->Auth->authenticate['all']['scope'] = array(
 			'User.status' => UserAttributeChoice::STATUS_CODE_ACTIVE
 		);
-
-		//$this->__setNc2Authenticate();
 
 		if ($this->Auth->login($user)) {
 			// ユーザ紐づけ

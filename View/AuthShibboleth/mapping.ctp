@@ -67,7 +67,6 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 							</div>
 						</div>
 						<?php echo $this->NetCommonsForm->input('password', array(
-							//'label' => __d('auth', 'Password'),
 							'placeholder' => __d('auth', 'Please enter your password.'),
 							'required' => true,
 							'class' => 'form-control allow-submit',

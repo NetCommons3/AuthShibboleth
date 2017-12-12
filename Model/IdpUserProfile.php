@@ -43,6 +43,10 @@ class IdpUserProfile extends AuthShibbolethAppModel {
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
+				),
 			),
 			'email' => array(
 				'email' => array(
