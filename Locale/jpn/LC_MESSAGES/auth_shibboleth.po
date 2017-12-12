@@ -34,7 +34,7 @@ msgstr "選択した所属機関認証システムから必要な属性情報が
 msgid "AuthShibboleth.login.success"
 msgstr "すべてのブラウザを閉じるまで「ログイン認証済み」となります。他者が使用する可能性のあるパソコンで接続した場合は、席を立つ前に必ずすべてのブラウザを閉じてください。"
 
-# ユーザ紐づけ画面
+# ログイン関連付け画面
 msgid "Do you associate the ID of %s you always use?"
 msgstr "いつも利用している%sのIDを関連づけますか。"
 

@@ -34,7 +34,7 @@ msgstr ""
 msgid "AuthShibboleth.login.success"
 msgstr ""
 
-# ユーザ紐づけ画面
+# ログイン関連付け画面
 msgid "Do you associate the ID of %s you always use?"
 msgstr ""
 

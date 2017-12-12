@@ -17,7 +17,7 @@ AuthShibbolethプラグインは、shibbolethログインをすることがで�
 ### 画面
 
 ![Shiboolethログイン](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth.png)
-![ユーザ紐づけ](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth2.png)
+![ログイン関連付け](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth2.png)
 ![Shiboolethログイン設定](https://github.com/NetCommons3/AuthShibboleth//wiki/images/shibboleth3.png)
 
 ### インストール

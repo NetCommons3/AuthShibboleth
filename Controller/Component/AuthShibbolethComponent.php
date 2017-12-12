@@ -182,7 +182,7 @@ class AuthShibbolethComponent extends Component {
 	}
 
 /**
- * ユーザ紐づけ
+ * ログイン関連付け
  *
  * @param int $userId ユーザID
  * @return void
@@ -222,7 +222,7 @@ class AuthShibbolethComponent extends Component {
 			throw new UnauthorizedException();
 		}
 
-		// ユーザ紐づけ済みのため、セッション初期化
+		// ログイン関連付け済みのため、セッション初期化
 		$this->Session->delete('AuthShibboleth');
 	}
 }

@@ -30,7 +30,6 @@ class AuthShibbolethAutoUserRegistController extends AutoUserRegistController {
  * @var array
  */
 	public $components = array(
-		//'Security',
 		'AuthShibboleth.AuthShibboleth',
 	);
 
@@ -46,12 +45,6 @@ class AuthShibbolethAutoUserRegistController extends AutoUserRegistController {
 		'Auth.AutoUserRegistForm',
 		'NetCommons.Wizard' => array(
 			'navibar' => array(
-				//				self::WIZARD_ENTRY_KEY => array(
-				//					'url' => array(
-				//						'controller' => 'auto_user_regist', 'action' => 'entry_key',
-				//					),
-				//					'label' => array('auth', 'Entry secret key?'),
-				//				),
 				self::WIZARD_REQUEST => array(
 					'url' => array(
 						'controller' => 'auth_shibboleth_auto_user_regist', 'action' => 'request',
@@ -64,12 +57,6 @@ class AuthShibbolethAutoUserRegistController extends AutoUserRegistController {
 					),
 					'label' => array('auth', 'Entry confirm.'),
 				),
-				//				self::WIZARD_COMPLETION => array(
-				//					'url' => array(
-				//						'controller' => 'auto_user_regist', 'action' => 'update',
-				//					),
-				//					'label' => array('auth', 'Complete registration.'),
-				//				),
 			),
 			'cancelUrl' => null
 		),
@@ -86,7 +73,6 @@ class AuthShibbolethAutoUserRegistController extends AutoUserRegistController {
 			$this->request->data['User']['id'] = null;
 			if ($this->AutoUserRegist->validateRequest($this->request->data)) {
 				$this->Session->write('AutoUserRegist', $this->request->data);
-				//return $this->redirect('/auth/auto_user_regist/confirm');
 				return $this->redirect('/auth_shibboleth/auth_shibboleth_auto_user_regist/confirm');
 			} else {
 				$this->NetCommons->handleValidationError($this->AutoUserRegist->validationErrors);
@@ -117,7 +103,7 @@ class AuthShibbolethAutoUserRegistController extends AutoUserRegistController {
 		if ($this->request->is('post')) {
 			$user = $this->AutoUserRegist->saveAutoUserRegist($this->request->data);
 			if ($user) {
-				// --- ユーザ紐づけ
+				// --- ログイン関連付け
 				$this->AuthShibboleth->saveUserMapping($user['User']['id']);
 
 				$user = Hash::merge($this->request->data, Hash::remove($user, 'User.password'));
@@ -128,7 +114,6 @@ class AuthShibbolethAutoUserRegistController extends AutoUserRegistController {
 
 				return $this->redirect('/auth/auto_user_regist/completion');
 			} else {
-				//$this->view = 'request';
 				$this->view = 'Auth.AutoUserRegist/request';
 				$this->NetCommons->handleValidationError($this->AutoUserRegist->validationErrors);
 			}

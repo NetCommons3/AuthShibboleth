@@ -100,7 +100,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 	}
 
 /**
- * ユーザ紐づけ
+ * ログイン関連付け
  *
  * @return void
  **/
@@ -113,7 +113,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 			$this->_login();
 
 		} else {
-			// --- ユーザ紐づけ済みならログイン
+			// --- ログイン関連付け済みならログイン
 			// IdPによる個人識別番号 で取得
 			$idpUser = $this->IdpUser->findByIdpUserid($this->AuthShibboleth->getIdpUserid());
 
@@ -134,7 +134,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 	}
 
 /**
- * ユーザ紐づけ画面のログイン
+ * ログイン関連付け画面のログイン
  *
  * @param array $user ユーザ情報
  * @throws BadRequestException
@@ -151,7 +151,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		);
 
 		if ($this->Auth->login($user)) {
-			// ユーザ紐づけ
+			// ログイン関連付け
 			$this->AuthShibboleth->saveUserMapping($this->Auth->user('id'));
 
 			// user情報更新

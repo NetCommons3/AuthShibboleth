@@ -1,6 +1,6 @@
 <?php
 /**
- * ユーザ紐づけ
+ * ログイン関連付け
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
