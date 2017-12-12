@@ -61,7 +61,7 @@ class IdpUserProfile extends AuthShibbolethAppModel {
  *
  * @param array $data received post data
  * @return mixed On success Model::$data if its not empty or true, false on failure
- * @throws InternalErrorException|Exception
+ * @throws InternalErrorException
  */
 	public function saveIdpUserProfile($data) {
 		//トランザクションBegin
