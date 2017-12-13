@@ -105,6 +105,11 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  * @return void
  **/
 	public function mapping() {
+		// IdPによる個人識別番号 or persistentId の存在チェック
+		if (! $this->AuthShibboleth->isIdpUserid()) {
+			$this->throwBadRequest();
+		}
+
 		//メールを送れるかどうか
 		$this->set('isMailSend', $this->ForgotPass->isMailSendCommon('auth', 'auth'));
 
