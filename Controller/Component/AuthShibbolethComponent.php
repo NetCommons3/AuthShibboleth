@@ -69,7 +69,6 @@ class AuthShibbolethComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$controller->IdpUser = ClassRegistry::init('AuthShibboleth.IdpUser');
-		$controller->IdpUserProfile = ClassRegistry::init('AuthShibboleth.IdpUserProfile');
 	}
 
 /**
@@ -206,20 +205,6 @@ class AuthShibbolethComponent extends Component {
 			if (! $idpUser) {
 				throw new UnauthorizedException();
 			}
-		}
-
-		// 外部ID連携詳細 保存
-		$data = array(
-			'idp_user_id' => $idpUser['IdpUser']['id'],		// idp_user.id
-			'email' => $this->Session->read('AuthShibboleth.mail'),
-			'profile' => serialize($this->Session->read('AuthShibboleth')),
-		);
-		if (Hash::get($idpUser, 'IdpUserProfile.id')) {
-			$data += array('id' => Hash::get($idpUser, 'IdpUserProfile.id'));
-		}
-		$IdpUserProfile = $this->_controller->IdpUserProfile->saveIdpUserProfile($data);
-		if (! $IdpUserProfile) {
-			throw new UnauthorizedException();
 		}
 
 		// ログイン関連付け済みのため、セッション初期化

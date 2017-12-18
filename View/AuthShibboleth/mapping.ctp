@@ -41,8 +41,6 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 					)
 				); ?>
 
-				<div >
-
 					<?php echo $this->NetCommonsForm->input('username', array(
 						'label' => __d('auth', 'Username'),
 						'placeholder' => __d('auth', 'Please enter your username.'),
@@ -77,7 +75,6 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 						<?php echo __d('auth', 'Login'); ?>
 					</button>
 
-				</div>
 				<?php echo $this->NetCommonsForm->end(); ?>
 
 			</article>

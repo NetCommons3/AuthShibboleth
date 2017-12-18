@@ -68,7 +68,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		// ベースURL（認証後のURLを開いた後のリダイレクトに利用します）
 		$baseUrl = SiteSettingUtil::read('AuthShibboleth.base_url');
 		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/mapping';
-		$this->Session->delete('AuthShibboleth.wayfAutoLogin');
+		$this->Session->delete('AuthShibbolethTmp.wayfAutoLogin');
 
 		// IdPのユーザ情報 セット
 		$this->AuthShibboleth->setIdpUserData();
@@ -80,7 +80,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		}
 
 		// 必要な属性情報が得られない時は、DSの自動ログインをOFFにする
-		$this->Session->write('AuthShibboleth.wayfAutoLogin', false);
+		$this->Session->write('AuthShibbolethTmp.wayfAutoLogin', false);
 
 		$returnUrl = $baseUrl . 'auth/login';
 		$redirect = $baseUrl . 'Shibboleth.sso/Logout?return=' . $returnUrl;
@@ -107,7 +107,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 	public function mapping() {
 		// IdPによる個人識別番号 or persistentId の存在チェック
 		if (! $this->AuthShibboleth->isIdpUserid()) {
-			$this->throwBadRequest();
+			return $this->throwBadRequest();
 		}
 
 		//メールを送れるかどうか

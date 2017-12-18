@@ -21,7 +21,6 @@ App::uses('AuthController', 'Auth.Controller');
  * @package NetCommons\AuthShibboleth\Controller
  * @property AuthShibbolethComponent $AuthShibboleth
  * @property IdpUser $IdpUser
- * @property IdpUserProfile $IdpUserProfile
  * @property User $User
  */
 class AuthShibbolethAppController extends AuthController {

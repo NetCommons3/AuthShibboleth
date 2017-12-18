@@ -71,23 +71,6 @@ class IdpUser extends AuthShibbolethAppModel {
 	}
 
 /**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'IdpUserProfile' => array(
-			'className' => 'AuthShibboleth.IdpUserProfile',
-			//'foreignKey' => false,
-			//'conditions' => array(
-			//	'IdpUser.id = IdpUserProfile.idp_user_id',
-			//),
-			//'fields' => '',
-			//'order' => ''
-		)
-	);
-
-/**
  * 外部ID連携 データ保存
  *
  * @param array $data received post data

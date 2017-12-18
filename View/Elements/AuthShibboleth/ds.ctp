@@ -15,7 +15,7 @@ if (! isset($wayfBorderColor)) {
 	$wayfBorderColor = '#F4F7F7';
 }
 
-$wayfAutoLogin = CakeSession::read('AuthShibboleth.wayfAutoLogin');
+$wayfAutoLogin = CakeSession::read('AuthShibbolethTmp.wayfAutoLogin');
 if (is_null($wayfAutoLogin)) {
 	$wayfAutoLogin = true;
 }
