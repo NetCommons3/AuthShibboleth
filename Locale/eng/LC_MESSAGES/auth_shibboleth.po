@@ -50,7 +50,7 @@ msgstr ""
 # 設定画面
 ## Shibbolethログイン
 msgid "AuthShibboleth.setting.label"
-msgstr ""
+msgstr "Shibboleth"
 
 msgid "AuthShibboleth.idp_userid"
 msgstr ""
