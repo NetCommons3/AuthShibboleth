@@ -53,13 +53,13 @@ msgid "AuthShibboleth.setting.label"
 msgstr "Shibbolethログイン"
 
 msgid "AuthShibboleth.idp_userid"
-msgstr "IdPによる個人識別番号に利用する項目"
+msgstr "永続的な利用者識別子"
 
 msgid "AuthShibboleth.idp_userid.placeholder"
 msgstr "eppn"
 
 msgid "AuthShibboleth.idp_userid.help"
-msgstr "上記かpersistent-idをIdPによる個人識別番号として利用します。"
+msgstr "上記かpersistent-idを永続的な利用者識別子として利用します。"
 
 ### Embedded DS
 msgid "Embedded DS"
@@ -69,7 +69,7 @@ msgid "AuthShibboleth.wayf_force_remember_for_session"
 msgstr "%s にチェックを入れたままにする"
 
 msgid "AuthShibboleth.wayf_URL"
-msgstr "WAYF URL"
+msgstr "URL of the WAYF to use"
 
 msgid "AuthShibboleth.wayf_URL.placeholder"
 msgstr "https://ds.gakunin.nii.ac.jp/WAYF"
@@ -78,40 +78,40 @@ msgid "AuthShibboleth.wayf_URL.help"
 msgstr "WAYF URLによってフェデレーションのIdPを表示します。"
 
 msgid "AuthShibboleth.wayf_sp_entityID"
-msgstr "SPのエンティティID"
+msgstr "EntityID of the Service Provider that protects this Resource"
 
 msgid "AuthShibboleth.wayf_sp_entityID.placeholder"
 msgstr "https://example.com/shibboleth-sp"
 
 msgid "AuthShibboleth.wayf_sp_handlerURL"
-msgstr "SPのハンドラURL"
+msgstr "Shibboleth Service Provider handler URL"
 
 msgid "AuthShibboleth.wayf_sp_handlerURL.placeholder"
 msgstr "https://example.com/Shibboleth.sso"
 
 msgid "AuthShibboleth.wayf_return_url"
-msgstr "認証後に開くURL"
+msgstr "URL on this resource that the user shall be returned to after authentication"
 
 msgid "AuthShibboleth.wayf_return_url.placeholder"
 msgstr "https://example.com/secure/index.php"
 
 msgid "AuthShibboleth.base_url"
-msgstr "ベースURL"
+msgstr "Base URL"
 
 msgid "AuthShibboleth.base_url.help"
-msgstr "認証後のURLを開いた後のリダイレクトに利用します。"
+msgstr "Returned URLを開いた後のリダイレクトに利用します。"
 
 msgid "AuthShibboleth.wayf_discofeed_url"
-msgstr "DiscpFeed URL"
+msgstr "URL where to load the Discovery Feed "
 
 msgid "AuthShibboleth.wayf_discofeed_url.placeholder"
 msgstr "https://office.gakunin.nii.ac.jp/ProdFed/export/discofeed/PS0NNNJP"
 
 msgid "AuthShibboleth.wayf_discofeed_url.help"
-msgstr "DiscpFeed URLによって表示IdPを絞り込めます。"
+msgstr "Discovery Feed URLによって表示IdPを絞り込めます。"
 
 msgid "AuthShibboleth.wayf_additional_idps"
-msgstr "他のフェデレーションのIdPを追加する"
+msgstr "EntityIDs, Names and SSO URLs of Identity Providers from other federations"
 
 msgid "AuthShibboleth.wayf_additional_idps.placeholder"
 msgstr ""
