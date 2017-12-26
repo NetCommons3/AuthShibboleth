@@ -108,7 +108,7 @@ msgid "AuthShibboleth.base_url"
 msgstr "Base URL"
 
 msgid "AuthShibboleth.base_url.help"
-msgstr "Return URLを開いた後のリダイレクトに利用します。"
+msgstr "Return Used for redirecting after opening the URL."
 
 msgid "AuthShibboleth.wayf_discofeed_url"
 msgstr "Discofeed URL"
