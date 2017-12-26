@@ -191,20 +191,23 @@ class AuthShibbolethComponent extends Component {
 		// IdPによる個人識別番号 で取得
 		$idpUser = $this->_controller->IdpUser->findByIdpUserid($this->getIdpUserid());
 
+		// 外部ID連携 保存
+		$data = array(
+			'user_id' => $userId,
+			'idp_userid' => $this->getIdpUserid(),		// IdPによる個人識別番号
+			'is_shib_eptid' => $this->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
+			'status' => '2',			// 2:有効
+			// nc3版はscope消した（shibboleth時は空なので）
+			//'scope' => '',				// shibboleth時は空
+		);
+		if ($idpUser) {
+			// データあれば更新
+			$data['id'] = $idpUser['IdpUser']['id'];
+		}
+
+		$idpUser = $this->_controller->IdpUser->saveIdpUser($data);
 		if (! $idpUser) {
-			// 外部ID連携 保存
-			$data = array(
-				'user_id' => $userId,
-				'idp_userid' => $this->getIdpUserid(),		// IdPによる個人識別番号
-				'is_shib_eptid' => $this->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
-				'status' => '2',			// 2:有効
-				// nc3版はscope消した（shibboleth時は空なので）
-				//'scope' => '',				// shibboleth時は空
-			);
-			$idpUser = $this->_controller->IdpUser->saveIdpUser($data);
-			if (! $idpUser) {
-				throw new UnauthorizedException();
-			}
+			throw new UnauthorizedException();
 		}
 
 		// ログイン関連付け済みのため、セッション初期化
