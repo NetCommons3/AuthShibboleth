@@ -52,6 +52,7 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 						'placeholder' => __d('auth', 'Please enter your username.'),
 						'required' => true,
 						'class' => 'form-control allow-submit',
+						'tabindex' => '1',
 					)); ?>
 
 					<div class="form-group">
@@ -74,10 +75,11 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 							'placeholder' => __d('auth', 'Please enter your password.'),
 							'required' => true,
 							'class' => 'form-control allow-submit',
+							'tabindex' => '2',
 						)); ?>
 					</div>
 
-					<button class="btn btn-primary btn-block" type="submit">
+					<button class="btn btn-primary btn-block" type="submit" tabindex="3">
 						<?php echo __d('auth', 'Login'); ?>
 					</button>
 
