@@ -24,7 +24,13 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 	</div>
 
 	<div class="row auth-shibboleth-mapping-main">
+
+		<?php if (SiteSettingUtil::read('AutoRegist.use_automatic_register', false)) : ?>
 		<div class="col-xs-6 auth-shibboleth-mapping-login">
+		<?php else : ?>
+		<div class="col-xs-12">
+		<?php endif; ?>
+
 			<br />
 			<p>
 				<?php echo __d('auth_shibboleth', 'Please login with the ID of %s.', SiteSettingUtil::read('App.site_name')); ?>
@@ -81,18 +87,20 @@ echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
 
 		</div>
 
-		<div class="col-xs-6">
-			<br />
-			<p>
-				<?php echo __d('auth_shibboleth',
-					'Still, if you do not have an account at %s please go to %s.',
-					array(SiteSettingUtil::read('App.site_name')), __d('auth', 'Sign up')); ?>
-			</p>
+		<?php if (SiteSettingUtil::read('AutoRegist.use_automatic_register', false)) : ?>
+			<div class="col-xs-6">
+				<br />
+				<p>
+					<?php echo __d('auth_shibboleth',
+						'Still, if you do not have an account at %s please go to %s.',
+						array(SiteSettingUtil::read('App.site_name'), __d('auth', 'Sign up'))); ?>
+				</p>
 
-			<a href="/auth_shibboleth/auth_shibboleth_auto_user_regist/request" class="btn btn-default btn-block">
-				<?php echo __d('auth', 'Sign up'); ?>
-			</a>
-		</div>
+				<a href="/auth_shibboleth/auth_shibboleth_auto_user_regist/request" class="btn btn-default btn-block">
+					<?php echo __d('auth', 'Sign up'); ?>
+				</a>
+			</div>
+		<?php endif; ?>
 	</div>
 
 </div>

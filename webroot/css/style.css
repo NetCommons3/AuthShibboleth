@@ -7,6 +7,12 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+/* ログイン */
+.auth-shibboleth-login {
+	text-align: center;
+	margin: 15px;
+}
+
 /*
  * --- ログイン関連付け画面
  */

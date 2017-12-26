@@ -16,7 +16,7 @@ msgstr ""
 msgid "Auth Shibboleth"
 msgstr ""
 
-msgid "Shibboleth login by IdP of other agencies"
+msgid "Login by other ID"
 msgstr ""
 
 msgid "Keep me logged in"

@@ -7,6 +7,17 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+echo $this->NetCommonsHtml->css('/auth_shibboleth/css/style.css');
+
+// [まだ]ログイン設定で切り替え可能にしたいなぁ
+$url = array('plugin' => 'auth_shibboleth', 'controller' => 'auth_shibboleth', 'action' => 'discovery');
+//$url = SiteSettingUtil::read('AuthShibboleth.wayf_return_url');
 ?>
 
-<?php echo $this->element('AuthShibboleth.AuthShibboleth/ds');
+<div class="auth-shibboleth-login">
+	<?php echo $this->NetCommonsHtml->link(
+		__d('auth_shibboleth', 'Login by other ID'),
+		$url
+	); ?>
+</div>

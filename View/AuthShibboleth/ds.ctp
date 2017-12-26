@@ -10,7 +10,7 @@
 ?>
 
 <h2>
-	<?php echo __d('auth_shibboleth', 'Shibboleth login by IdP of other agencies'); ?>
+	<?php echo __d('auth_shibboleth', 'Login by other ID'); ?>
 </h2>
 
 <?php /* DS */ ?>

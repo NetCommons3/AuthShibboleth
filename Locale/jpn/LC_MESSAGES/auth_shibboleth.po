@@ -14,10 +14,10 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Auth Shibboleth"
-msgstr "Shibboleth認証"
+msgstr "Shibbolethログイン"
 
-msgid "Shibboleth login by IdP of other agencies"
-msgstr "他の機関のIdPによるShibbolethログイン"
+msgid "Login by other ID"
+msgstr "他の機関のIdPによるshibbolethログイン"
 
 msgid "Keep me logged in"
 msgstr "ログインしたままにする"
