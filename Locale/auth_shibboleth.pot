@@ -83,16 +83,25 @@ msgstr ""
 msgid "AuthShibboleth.wayf_sp_entityID.placeholder"
 msgstr ""
 
+msgid "AuthShibboleth.wayf_sp_entityID.help"
+msgstr ""
+
 msgid "AuthShibboleth.wayf_sp_handlerURL"
 msgstr ""
 
 msgid "AuthShibboleth.wayf_sp_handlerURL.placeholder"
 msgstr ""
 
+msgid "AuthShibboleth.wayf_sp_handlerURL.help"
+msgstr ""
+
 msgid "AuthShibboleth.wayf_return_url"
 msgstr ""
 
 msgid "AuthShibboleth.wayf_return_url.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_return_url.help"
 msgstr ""
 
 msgid "AuthShibboleth.base_url"
@@ -114,6 +123,9 @@ msgid "AuthShibboleth.wayf_additional_idps"
 msgstr ""
 
 msgid "AuthShibboleth.wayf_additional_idps.placeholder"
+msgstr ""
+
+msgid "AuthShibboleth.wayf_additional_idps.help"
 msgstr ""
 
 ## validate

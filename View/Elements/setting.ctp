@@ -47,6 +47,7 @@
 				'type' => 'text',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_entityID'),
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_entityID.placeholder'),
+				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_entityID.help'),
 				'required' => true,
 			)); ?>
 
@@ -54,6 +55,7 @@
 				'type' => 'text',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_handlerURL'),
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_handlerURL.placeholder'),
+				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_sp_handlerURL.help'),
 				'required' => true,
 			)); ?>
 
@@ -61,6 +63,7 @@
 				'type' => 'text',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_return_url'),
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_return_url.placeholder'),
+				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_return_url.help'),
 				'required' => true,
 			)); ?>
 
@@ -87,6 +90,7 @@
 				'type' => 'textarea',
 				'label' => __d('auth_shibboleth', 'AuthShibboleth.wayf_additional_idps'),
 				'placeholder' => __d('auth_shibboleth', 'AuthShibboleth.wayf_additional_idps.placeholder'),
+				'help' => __d('auth_shibboleth', 'AuthShibboleth.wayf_additional_idps.help'),
 			)); ?>
 		</div>
 	</div>
