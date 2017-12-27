@@ -68,7 +68,7 @@ class AuthShibbolethComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-		$controller->ExternalIdpUser = ClassRegistry::init('AuthShibboleth.ExternalIdpUser');
+		$controller->ExternalIdpUser = ClassRegistry::init('Auth.ExternalIdpUser');
 	}
 
 /**

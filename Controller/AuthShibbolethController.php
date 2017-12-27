@@ -26,7 +26,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  * @var array
  */
 	public $uses = array(
-		'AuthShibboleth.ExternalIdpUser',
+		'Auth.ExternalIdpUser',
 		'Users.User',
 	);
 
