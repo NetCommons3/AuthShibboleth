@@ -1,6 +1,6 @@
 <?php
 /**
- * IdpUser Model
+ * ExternalIdpUser Model
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @link http://www.netcommons.org NetCommons Project
@@ -11,12 +11,12 @@
 App::uses('AuthShibbolethAppModel', 'AuthShibboleth.Model');
 
 /**
- * IdpUser Model
+ * ExternalIdpUser Model
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Model
  */
-class IdpUser extends AuthShibbolethAppModel {
+class ExternalIdpUser extends AuthShibbolethAppModel {
 
 /**
  * Validation rules
@@ -77,7 +77,7 @@ class IdpUser extends AuthShibbolethAppModel {
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
-	public function saveIdpUser($data) {
+	public function saveExternalIdpUser($data) {
 		//トランザクションBegin
 		$this->begin();
 
@@ -90,7 +90,7 @@ class IdpUser extends AuthShibbolethAppModel {
 
 		try {
 			// 保存
-			if (! $idpUser = $this->save(null, false)) {
+			if (! $externalIdpUser = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
@@ -102,6 +102,6 @@ class IdpUser extends AuthShibbolethAppModel {
 			$this->rollback($ex);
 		}
 
-		return $idpUser;
+		return $externalIdpUser;
 	}
 }

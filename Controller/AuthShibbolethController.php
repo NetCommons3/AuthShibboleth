@@ -26,7 +26,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
  * @var array
  */
 	public $uses = array(
-		'AuthShibboleth.IdpUser',
+		'AuthShibboleth.ExternalIdpUser',
 		'Users.User',
 	);
 
@@ -120,11 +120,11 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		} else {
 			// --- ログイン関連付け済みならログイン
 			// IdPによる個人識別番号 で取得
-			$idpUser = $this->IdpUser->findByIdpUserid($this->AuthShibboleth->getIdpUserid());
+			$externalIdpUser = $this->ExternalIdpUser->findByIdpUserid($this->AuthShibboleth->getIdpUserid());
 
-			if ($idpUser) {
+			if ($externalIdpUser) {
 				// ユーザ検索
-				$user = $this->User->findByIdAndStatus($idpUser['IdpUser']['user_id'],
+				$user = $this->User->findByIdAndStatus($externalIdpUser['ExternalIdpUser']['user_id'],
 					UserAttributeChoice::STATUS_CODE_ACTIVE);
 				if ($user) {
 					// $this->Auth->_user と同じ配列構成にする

@@ -68,7 +68,7 @@ class AuthShibbolethComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-		$controller->IdpUser = ClassRegistry::init('AuthShibboleth.IdpUser');
+		$controller->ExternalIdpUser = ClassRegistry::init('AuthShibboleth.ExternalIdpUser');
 	}
 
 /**
@@ -189,7 +189,7 @@ class AuthShibbolethComponent extends Component {
  */
 	public function saveUserMapping($userId) {
 		// IdPによる個人識別番号 で取得
-		$idpUser = $this->_controller->IdpUser->findByIdpUserid($this->getIdpUserid());
+		$externalIdpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($this->getIdpUserid());
 
 		// 外部ID連携 保存
 		$data = array(
@@ -200,13 +200,13 @@ class AuthShibbolethComponent extends Component {
 			// nc3版はscope消した（shibboleth時は空なので）
 			//'scope' => '',				// shibboleth時は空
 		);
-		if ($idpUser) {
+		if ($externalIdpUser) {
 			// データあれば更新
-			$data['id'] = $idpUser['IdpUser']['id'];
+			$data['id'] = $externalIdpUser['ExternalIdpUser']['id'];
 		}
 
-		$idpUser = $this->_controller->IdpUser->saveIdpUser($data);
-		if (! $idpUser) {
+		$externalIdpUser = $this->_controller->ExternalIdpUser->saveExternalIdpUser($data);
+		if (! $externalIdpUser) {
 			throw new UnauthorizedException();
 		}
 

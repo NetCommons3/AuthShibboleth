@@ -1,6 +1,6 @@
 <?php
 /**
- * IdpUserFixture
+ * ExternalIdpUserFixture
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @link http://www.netcommons.org NetCommons Project
@@ -9,12 +9,12 @@
  */
 
 /**
- * IdpUserFixture
+ * ExternalIdpUserFixture
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Test\Fixture
  */
-class IdpUserFixture extends CakeTestFixture {
+class ExternalIdpUserFixture extends CakeTestFixture {
 
 /**
  * Records
