@@ -10,7 +10,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('AuthController', 'Auth.Controller');
+App::uses('AuthExternalController', 'Auth.Controller');
 
 /**
  * 認証処理
@@ -23,6 +23,6 @@ App::uses('AuthController', 'Auth.Controller');
  * @property ExternalIdpUser $ExternalIdpUser
  * @property User $User
  */
-class AuthShibbolethAppController extends AuthController {
+class AuthShibbolethAppController extends AuthExternalController {
 
 }
