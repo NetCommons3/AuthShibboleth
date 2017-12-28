@@ -16,6 +16,7 @@ App::uses('Component', 'Controller');
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Controller\Component
  * @property SessionComponent $Session
+ * @property NetCommonsComponent $NetCommons
  */
 class AuthShibbolethComponent extends Component {
 
@@ -41,6 +42,7 @@ class AuthShibbolethComponent extends Component {
  */
 	public $components = array(
 		'Session',
+		'NetCommons.NetCommons',
 	);
 
 /**
@@ -69,6 +71,7 @@ class AuthShibbolethComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$controller->ExternalIdpUser = ClassRegistry::init('Auth.ExternalIdpUser');
+		$controller->User = ClassRegistry::init('Users.User');
 	}
 
 /**
@@ -109,6 +112,7 @@ class AuthShibbolethComponent extends Component {
 		$this->__setSession($prefix, 'givenName');		//氏名(名)の英字
 		$this->__setSession($prefix, 'o');				//所属(英語)
 		$this->__setSession($prefix, 'ou');				//部署(英語)
+		$this->__setSession($prefix, 'Shib-Identity-Provider');				//IdPエンティティID
 	}
 
 /**
@@ -205,12 +209,90 @@ class AuthShibbolethComponent extends Component {
 			$data['id'] = $externalIdpUser['ExternalIdpUser']['id'];
 		}
 
+		// 保存
 		$externalIdpUser = $this->_controller->ExternalIdpUser->saveExternalIdpUser($data);
 		if (! $externalIdpUser) {
 			throw new UnauthorizedException();
 		}
+	}
 
-		// ログイン関連付け済みのため、セッション初期化
-		$this->Session->delete('AuthShibboleth');
+/**
+ * 「他サービスを用いたログイン処理」後の処理・画面遷移先
+ *
+ * * 関連付けられてるなら、ID関連付けを行う。呼び出し元でログイン処理をする
+ * * 関連付けされていないなら、「ログイン関連付け画面」へリダイレクト
+ * * 関連付けたユーザが利用不可かいないなら、「ログイン関連付け画面」へリダイレクト
+ * * 関連付けたユーザが承認待ちなら、メッセージを表示してトップページへリダイレクト
+ * * 関連付けが無効に設定されていたら、メッセージを表示してトップページへリダイレクト
+ *
+ * @return string リダイレクト先
+ * @throws UnauthorizedException
+ */
+	public function exLoginRedirect() {
+		// IdPによる個人識別番号 or persistentId の存在チェック
+		// 他の外部認証はshibbolethのセッション持ってないので、ここでreturnされる想定
+		if (! $this->isIdpUserid()) {
+			return '';
+		}
+
+		// IdPによる個人識別番号 で取得
+		$idpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($this->getIdpUserid());
+		if (! $idpUser) {
+			// 関連付けされていないなら「ログイン関連付け画面」へリダイレクト
+			return '/auth_shibboleth/auth_shibboleth/mapping';
+		}
+
+		// ユーザ検索
+		$user = $this->_controller->User->findById($idpUser['ExternalIdpUser']['user_id']);
+		if (! $user) {
+			throw new UnauthorizedException();
+		}
+
+		// User.is_deleted = 0：削除していない  1：削除済み'
+		// User.status = 0:利用不可  1:利用可  2.承認待ち  3.承認済み（メールでのユーザ自身承認前） null:削除済み
+		if ($user['User']['is_deleted'] === '1' || $user['User']['status'] === '0') {
+			// status = 0:ユーザ利用不可か is_deleted = 1：削除済みなら「ログイン関連付け画面」へリダイレクト
+			return '/auth_shibboleth/auth_shibboleth/mapping';
+
+		} elseif ($user['User']['status'] === '2' || $user['User']['status'] === '3') {
+			// status =2.承認待ち  3.承認済みならメッセージ表示してtopページにリダイレクト
+			$this->NetCommons->setFlashNotification(
+				__d('auth',
+					'Account is pending approval. Please wait until your account is approved, ' .
+					'or confirm that you have not received your membership confirmation email.'),
+				array(
+					'class' => 'warning',
+					'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
+				),
+				400
+			);
+			return '/';
+		}
+
+		if ($idpUser['ExternalIdpUser']['status'] === '2') {
+			// 2:有効 （関連付けられてる）なら、ID関連付けを行う。呼び出し元でログイン処理をする
+			// ID関連付け
+			$this->saveUserMapping($user['User']['id']);
+
+			// ログイン処理へ（実際のリダイレクトパスではなく、呼び出し元で判定に使う）
+			return 'login';
+
+		} elseif ($idpUser['ExternalIdpUser']['status'] === '0') {
+			// 0:無効 ならメッセージ表示してtopページにリダイレクト
+			$this->NetCommons->setFlashNotification(
+				__d('auth',
+					'The ID association information of the corresponding service is invalid. ' .
+					'Please login with a different ID and review ID linkage settings or ' .
+					'contact your institution.'),
+				array(
+					'class' => 'danger',
+					'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
+				),
+				400
+			);
+			return '/';
+		}
+
+		return '';
 	}
 }

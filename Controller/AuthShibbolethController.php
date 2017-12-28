@@ -9,8 +9,6 @@
  */
 
 App::uses('AuthShibbolethAppController', 'AuthShibboleth.Controller');
-App::uses('AuthShibbolethComponent', 'AuthShibboleth.Controller/Component');
-App::uses('UserAttributeChoice', 'UserAttributes.Model');
 
 /**
  * AuthShibboleth Controller
@@ -19,16 +17,6 @@ App::uses('UserAttributeChoice', 'UserAttributes.Model');
  * @package NetCommons\AuthShibboleth\Controller
  */
 class AuthShibbolethController extends AuthShibbolethAppController {
-
-/**
- * use model
- *
- * @var array
- */
-	public $uses = array(
-		'Auth.ExternalIdpUser',
-		'Users.User',
-	);
 
 /**
  * use component
@@ -67,7 +55,9 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 	public function secure() {
 		// ベースURL（認証後のURLを開いた後のリダイレクトに利用します）
 		$baseUrl = SiteSettingUtil::read('AuthShibboleth.base_url');
-		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/mapping';
+
+		// 外部認証のID関連付けログイン、仮登録画面、関連付け画面への遷移先別けはexloginで行う
+		$redirect = $baseUrl . 'auth_shibboleth/auth_shibboleth/exlogin';
 		$this->Session->delete('AuthShibbolethTmp.wayfAutoLogin');
 
 		// IdPのユーザ情報 セット
@@ -87,7 +77,7 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 
 		// メッセージ表示
 		$this->NetCommons->setFlashNotification(
-			__d('auth_shibboleth', 'AuthShibboleth.login.failure'),
+			__d('auth', 'Auth.exlogin.failure'),
 			array(
 				'class' => 'danger',
 				'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
@@ -100,7 +90,18 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 	}
 
 /**
- * ログイン関連付け
+ * 「他サービスを用いたログイン処理」後の処理・画面遷移先
+ * (外部認証系プラグインのコントローラでオーバーライトして実装)
+ *
+ * @return string リダイレクト先
+ **/
+	protected function _exLoginRedirect() {
+		return $this->AuthShibboleth->exLoginRedirect();
+	}
+
+/**
+ * ID関連付け
+ * (オーバーライト)
  *
  * @return void
  **/
@@ -109,84 +110,30 @@ class AuthShibbolethController extends AuthShibbolethAppController {
 		if (! $this->AuthShibboleth->isIdpUserid()) {
 			return $this->throwBadRequest();
 		}
-
-		//メールを送れるかどうか
-		$this->set('isMailSend', $this->ForgotPass->isMailSendCommon('auth', 'auth'));
-
-		if ($this->request->is('post')) {
-			// ログイン
-			$this->_login();
-
-		} else {
-			// --- ログイン関連付け済みならログイン
-			// IdPによる個人識別番号 で取得
-			$externalIdpUser = $this->ExternalIdpUser->findByIdpUserid($this->AuthShibboleth->getIdpUserid());
-
-			if ($externalIdpUser) {
-				// ユーザ検索
-				$user = $this->User->findByIdAndStatus($externalIdpUser['ExternalIdpUser']['user_id'],
-					UserAttributeChoice::STATUS_CODE_ACTIVE);
-				if ($user) {
-					// $this->Auth->_user と同じ配列構成にする
-					$user = Hash::merge($user, $user['User']);
-					$user = Hash::remove($user, 'User');
-					// ログイン
-					$this->_login($user);
-				}
-			}
-
-		}
+		parent::mapping();
 	}
 
 /**
- * ログイン関連付け画面のログイン
+ * IdPによる個人識別番号 取得
+ * (オーバーライト)
  *
- * @param array $user ユーザ情報
- * @throws BadRequestException
- * @return CakeResponse
- * @see AuthController::login() よりコピー
+ * @return string idpUserid or persistentId
  **/
-	protected function _login($user = null) {
-		//Auth->login()を実行すると、$this->UserがUsers.UserからModelAppに置き換わってしまい、
-		//エラーになるため、変数に保持しておく。
-		$User = $this->User;
+	protected function _getIdpUserid() {
+		return $this->AuthShibboleth->getIdpUserid();
+	}
 
-		$this->Auth->authenticate['all']['scope'] = array(
-			'User.status' => UserAttributeChoice::STATUS_CODE_ACTIVE
-		);
+/**
+ * _exLogin()でログイン後の追加処理
+ * (オーバーライト)
+ *
+ * @return void
+ **/
+	protected function _exLoggedin() {
+		// ログイン関連付け
+		$this->AuthShibboleth->saveUserMapping($this->Auth->user('id'));
 
-		if ($this->Auth->login($user)) {
-			// ログイン関連付け
-			$this->AuthShibboleth->saveUserMapping($this->Auth->user('id'));
-
-			// user情報更新
-			$User->updateLoginTime($this->Auth->user('id'));
-			Current::write('User', $this->Auth->user());
-			if ($this->Auth->user('language') !== UserAttributeChoice::LANGUAGE_KEY_AUTO) {
-				$this->Session->write('Config.language', $this->Auth->user('language'));
-			}
-
-			// メッセージ表示
-			$this->NetCommons->setFlashNotification(
-				__d('auth_shibboleth', 'AuthShibboleth.login.success'),
-				array(
-					'class' => 'success',
-					'interval' => 4000,
-				)
-			);
-
-			// リダイレクト
-			$this->Auth->loginRedirect = $this->_getDefaultStartPage();
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-
-		$this->NetCommons->setFlashNotification(
-			__d('auth', 'Invalid username or password, try again'),
-			array(
-				'class' => 'danger',
-				'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
-			),
-			400
-		);
+		// shibbolethのセッション初期化
+		$this->Session->delete('AuthShibboleth');
 	}
 }
