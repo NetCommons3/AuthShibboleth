@@ -229,12 +229,6 @@ class AuthShibbolethComponent extends Component {
  * @throws UnauthorizedException
  */
 	public function exLoginRedirect() {
-		// IdPによる個人識別番号 or persistentId の存在チェック
-		// 他の外部認証はshibbolethのセッション持ってないので、ここでreturnされる想定
-		if (! $this->isIdpUserid()) {
-			return '';
-		}
-
 		// IdPによる個人識別番号 で取得
 		$idpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($this->getIdpUserid());
 		if (! $idpUser) {
