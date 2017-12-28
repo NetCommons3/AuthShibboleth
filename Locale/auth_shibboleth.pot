@@ -19,6 +19,7 @@ msgstr ""
 msgid "Login by other ID"
 msgstr ""
 
+# DS画面
 msgid "Keep me logged in"
 msgstr ""
 
@@ -26,25 +27,6 @@ msgid "Go"
 msgstr ""
 
 msgid "Organization:"
-msgstr ""
-
-msgid "AuthShibboleth.login.failure"
-msgstr ""
-
-msgid "AuthShibboleth.login.success"
-msgstr ""
-
-# ログイン関連付け画面
-msgid "Do you associate the ID of %s you always use?"
-msgstr ""
-
-msgid "You can associate the ID of the specified service with the ID of %s."
-msgstr ""
-
-msgid "Please login with the ID of %s."
-msgstr ""
-
-msgid "Still, if you do not have an account at %s please go to %s."
 msgstr ""
 
 # 設定画面

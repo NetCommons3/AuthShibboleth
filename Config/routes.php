@@ -1,5 +1,6 @@
+<?php
 /**
- * auth_shibboleth/css/style.css
+ * AuthShibboleth routes
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @link http://www.netcommons.org NetCommons Project
@@ -7,8 +8,10 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-/* ログイン */
-.auth-shibboleth-login {
-	text-align: center;
-	margin: 15px;
-}
+Router::connect(
+	'/auth_shibboleth/auth_auto_user_regist/:action',
+	[
+		'plugin' => 'auth_shibboleth',
+		'controller' => 'auth_shibboleth_auto_user_regist',
+	]
+);
