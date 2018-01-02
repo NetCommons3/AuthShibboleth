@@ -17,7 +17,7 @@ AuthShibbolethプラグインは、shibbolethログインをすることがで�
 
 * NetCommon3.1.7以降に対応。
 * 別途、Shibooleth SPの導入が必要です。
-* [copyToDocumentRootの中身](https://github.com/NetCommons3/AuthShibboleth/tree/master/copyToDocumentRoot) をドキュメントルートに上書きコピーします。
+* [copyToDocumentRootの中身](https://github.com/NetCommons3/AuthShibboleth/tree/master/copyToDocumentRoot) をNetCommon3のインストールディレクトリ（例：/var/www/html/nc3/）に上書きコピーします。
 
 ### 画面
 
