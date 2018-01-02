@@ -26,16 +26,6 @@ class AuthShibbolethComponent extends Component {
 	const PERSISTENT_ID = 'persistent-id';
 
 /**
- * @var string IdPによる個人識別番号
- */
-	public $idpUserid = null;
-
-/**
- * @var string フェデレーション内のエンティティを匿名で表す
- */
-	public $persistentId = null;
-
-/**
  * Other components
  *
  * @var array
@@ -88,8 +78,8 @@ class AuthShibbolethComponent extends Component {
 		for ($i = 0; $i < 5; $i++) {
 			$prefix = str_repeat("REDIRECT_", $i);
 			$idpUseridSetting = SiteSettingUtil::read('AuthShibboleth.idp_userid');
-			$this->__setSession($prefix, $idpUseridSetting);
-			$this->__setSession($prefix, self::PERSISTENT_ID);
+			$this->_setSession($prefix, $idpUseridSetting);
+			$this->_setSession($prefix, self::PERSISTENT_ID);
 
 			$idpUserid = $this->Session->read('AuthShibboleth.' . $idpUseridSetting);
 			if ($idpUserid) {
@@ -101,18 +91,18 @@ class AuthShibbolethComponent extends Component {
 			return;
 		}
 
-		$this->__setSession($prefix, 'mail');			//メールアドレス
-		$this->__setSession($prefix, 'jaDisplayName');	//日本語氏名（表示名）
-		$this->__setSession($prefix, 'jasn');			//氏名（姓）の日本語
-		$this->__setSession($prefix, 'jaGivenName');	//氏名（名）の日本語
-		$this->__setSession($prefix, 'jao');			//所属(日本語)
-		$this->__setSession($prefix, 'jaou');			//部署(日本語)
-		$this->__setSession($prefix, 'displayName');	//英字氏名（表示名）
-		$this->__setSession($prefix, 'sn');				//氏名(姓)の英字
-		$this->__setSession($prefix, 'givenName');		//氏名(名)の英字
-		$this->__setSession($prefix, 'o');				//所属(英語)
-		$this->__setSession($prefix, 'ou');				//部署(英語)
-		$this->__setSession($prefix, 'Shib-Identity-Provider');				//IdPエンティティID
+		//		$this->__setSession($prefix, 'mail');			//メールアドレス
+		//		$this->__setSession($prefix, 'jaDisplayName');	//日本語氏名（表示名）
+		//		$this->__setSession($prefix, 'jasn');			//氏名（姓）の日本語
+		//		$this->__setSession($prefix, 'jaGivenName');	//氏名（名）の日本語
+		//		$this->__setSession($prefix, 'jao');			//所属(日本語)
+		//		$this->__setSession($prefix, 'jaou');			//部署(日本語)
+		//		$this->__setSession($prefix, 'displayName');	//英字氏名（表示名）
+		//		$this->__setSession($prefix, 'sn');				//氏名(姓)の英字
+		//		$this->__setSession($prefix, 'givenName');		//氏名(名)の英字
+		//		$this->__setSession($prefix, 'o');				//所属(英語)
+		//		$this->__setSession($prefix, 'ou');				//部署(英語)
+		$this->_setSession($prefix, 'Shib-Identity-Provider');				//IdPエンティティID
 	}
 
 /**
@@ -122,7 +112,7 @@ class AuthShibbolethComponent extends Component {
  * @param string $itemKey Sessionの配列キーの一部
  * @return void
  */
-	private function __setSession($prefix, $itemKey) {
+	protected function _setSession($prefix, $itemKey) {
 		$item = Hash::get($_SERVER, $prefix . $itemKey);
 		if (! is_null($item)) {
 			$this->Session->write('AuthShibboleth.' . $itemKey, $item);
@@ -236,11 +226,8 @@ class AuthShibbolethComponent extends Component {
 			return '/auth_shibboleth/auth_shibboleth/mapping';
 		}
 
-		// ユーザ検索
-		$user = $this->_controller->User->findById($idpUser['ExternalIdpUser']['user_id']);
-		if (! $user) {
-			throw new UnauthorizedException();
-		}
+		// ユーザ情報取得
+		$user = $this->_getUserById($idpUser['ExternalIdpUser']['user_id']);
 
 		// User.is_deleted = 0：削除していない  1：削除済み'
 		// User.status = 0:利用不可  1:利用可  2.承認待ち  3.承認済み（メールでのユーザ自身承認前） null:削除済み
@@ -288,5 +275,20 @@ class AuthShibbolethComponent extends Component {
 		}
 
 		return '';
+	}
+
+/**
+ * ユーザ情報 取得
+ *
+ * @param int $userId ユーザID
+ * @return array ユーザ情報
+ * @throws UnauthorizedException
+ */
+	protected function _getUserById($userId) {
+		$user = $this->_controller->User->findById($userId);
+		if (! $user) {
+			throw new UnauthorizedException();
+		}
+		return $user;
 	}
 }
