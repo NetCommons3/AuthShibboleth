@@ -98,7 +98,7 @@ class AuthShibbolethValidateBehavior extends SiteSettingValidateBehavior {
 					sprintf(
 						__d('net_commons', 'Unauthorized pattern for %s. Please input the data in %s format.'),
 						__d($model->messagePlugin, $key),
-						__d($model->messagePlugin, 'URL')
+						__d('net_commons', 'URL')
 					));
 			}
 		}

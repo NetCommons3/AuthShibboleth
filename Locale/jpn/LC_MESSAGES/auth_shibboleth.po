@@ -114,7 +114,3 @@ msgstr ""
 
 msgid "AuthShibboleth.wayf_additional_idps.help"
 msgstr "EntityIDs, Names and SSO URLs of Identity Providers from other federations"
-
-## validate
-msgid "URL"
-msgstr ""

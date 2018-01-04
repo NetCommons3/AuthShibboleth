@@ -109,7 +109,3 @@ msgstr ""
 
 msgid "AuthShibboleth.wayf_additional_idps.help"
 msgstr ""
-
-## validate
-msgid "URL"
-msgstr ""
