@@ -20,6 +20,15 @@ App::uses('Component', 'Controller');
 class AuthShibbolethSettingComponent extends Component {
 
 /**
+ * Other Components this component uses.
+ *
+ * @var array
+ */
+	public $components = array(
+		'SiteManager.SiteManager'
+	);
+
+/**
  * @var Controller コントローラ
  */
 	protected $_controller = null;
@@ -34,6 +43,17 @@ class AuthShibbolethSettingComponent extends Component {
 	public function initialize(Controller $controller) {
 		// どのファンクションでも $controller にアクセスできるようにクラス内変数に保持する
 		$this->_controller = $controller;
+	}
+
+/**
+ * Called after the Controller::beforeFilter() and before the controller action
+ *
+ * @param Controller $controller Controller with components to startup
+ * @return void
+ * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
+ */
+	public function startup(Controller $controller) {
+		$controller->SiteSetting = ClassRegistry::init('SiteManager.SiteSetting');
 	}
 
 /**
