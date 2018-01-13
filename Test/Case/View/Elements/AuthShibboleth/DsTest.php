@@ -61,7 +61,7 @@ class AuthShibbolethViewElementsAuthShibbolethDsTest extends AuthShibbolethContr
 
 		//テスト実行
 		$this->_testGetAction(
-			'/test_auth_shibboleth/test_view_elements_auth_shibboleth_ds/ds',
+			'/test_auth_shibboleth/test_view_elements_auth_shibboleth_ds/discovery',
 			array('method' => 'assertNotEmpty'), null, 'view'
 		);
 
@@ -81,7 +81,7 @@ class AuthShibbolethViewElementsAuthShibbolethDsTest extends AuthShibbolethContr
 
 		//テスト実行
 		$this->_testGetAction(
-			'/test_auth_shibboleth/test_view_elements_auth_shibboleth_ds/ds',
+			'/test_auth_shibboleth/test_view_elements_auth_shibboleth_ds/discovery',
 			array('method' => 'assertNotEmpty'), null, 'view'
 		);
 

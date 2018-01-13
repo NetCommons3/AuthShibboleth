@@ -24,7 +24,7 @@ class TestViewElementsAuthShibbolethDsController extends AppController {
  *
  * @return void
  */
-	public function ds() {
+	public function discovery() {
 		$this->autoRender = true;
 	}
 
