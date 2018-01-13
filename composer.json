@@ -12,6 +12,7 @@
         "netcommons/mails":            "@dev",
         "netcommons/net-commons":      "@dev",
         "netcommons/site-manager":     "@dev",
+        "netcommons/system-manager":   "@dev",
         "netcommons/user-attributes":  "@dev",
         "netcommons/users":            "@dev"
     },
