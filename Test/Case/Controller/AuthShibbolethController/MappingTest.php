@@ -94,6 +94,9 @@ class AuthShibbolethControllerMappingTest extends AuthShibbolethControllerTestCa
  * @return void
  */
 	public function testMappingGetException() {
+		//テストデータ
+		CakeSession::delete('AuthShibboleth.eppn');
+
 		//テスト実行
 		$this->_testGetAction(
 			array('action' => 'mapping'),
