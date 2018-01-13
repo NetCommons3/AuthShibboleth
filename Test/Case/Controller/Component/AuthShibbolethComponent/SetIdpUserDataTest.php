@@ -101,7 +101,7 @@ class AuthShibbolethComponentSetIdpUserDataTest extends AuthShibbolethController
 		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent');
 
 		//テストデータ
-		unset($_SERVER['eppn']);
+		CakeSession::delete('AuthShibboleth.eppn');
 
 		//テストアクション実行
 		$this->_testGetAction(
