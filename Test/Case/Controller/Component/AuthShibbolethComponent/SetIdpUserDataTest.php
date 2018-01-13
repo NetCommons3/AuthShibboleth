@@ -100,6 +100,9 @@ class AuthShibbolethComponentSetIdpUserDataTest extends AuthShibbolethController
 		//テストコントローラ生成
 		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent');
 
+		//テストデータ
+		unset($_SERVER['eppn']);
+
 		//テストアクション実行
 		$this->_testGetAction(
 			'/test_auth_shibboleth/test_auth_shibboleth_component/index',
@@ -112,7 +115,7 @@ class AuthShibbolethComponentSetIdpUserDataTest extends AuthShibbolethController
 		/* @see AuthShibbolethComponent::setIdpUserData() */
 		$this->controller->AuthShibboleth->setIdpUserData();
 		$this->assertEmpty(CakeSession::read('AuthShibboleth.eppn'),
-			'セッションRmAuthShibboleth.eppnは$_SERVERにセットしてないので空の想定です');
+			'セッションAuthShibboleth.eppnは$_SERVERにセットしてないので空の想定です');
 	}
 
 }
