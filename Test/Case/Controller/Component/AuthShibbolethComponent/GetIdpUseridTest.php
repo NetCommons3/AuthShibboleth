@@ -10,6 +10,7 @@
  */
 
 App::uses('AuthShibbolethControllerTestCase', 'AuthShibboleth.TestSuite');
+App::uses('AuthShibbolethComponent', 'AuthShibboleth.Controller/Component');
 
 /**
  * AuthShibbolethComponent::getIdpUserid()のテスト
@@ -24,7 +25,9 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
  *
  * @var array
  */
-	public $fixtures = array();
+	public $fixtures = array(
+		'plugin.auth_shibboleth.site_setting4_auth_shibboleth',
+	);
 
 /**
  * Plugin name
@@ -43,6 +46,15 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
 
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'AuthShibboleth', 'TestAuthShibboleth');
+
+		//テストコントローラ生成
+		/* @see NetCommonsControllerBaseTestCase::generateNc() でSessionをモックにしないための設定 */
+		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent', array(
+			'components' => array('Session' => '')
+		));
+
+		//ログイン
+		TestAuthGeneral::login($this);
 	}
 
 /**
@@ -63,11 +75,8 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
  * @return void
  */
 	public function testGetIdpUserid() {
-		//テストコントローラ生成
-		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent');
-
-		//ログイン
-		TestAuthGeneral::login($this);
+		//テストデータ
+		CakeSession::write('AuthShibboleth.eppn', 'test103@idp.e-rad.local');
 
 		//テストアクション実行
 		$this->_testGetAction(
@@ -78,10 +87,52 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
 		$this->assertRegExp($pattern, $this->view);
 
 		//テスト実行
+		/* @see AuthShibbolethComponent::getIdpUserid() */
 		$result = $this->controller->AuthShibboleth->getIdpUserid();
+		$this->assertNotEmpty($result, 'eppnセッション設定のため、値が返ってくる想定');
+	}
 
-		//TODO:必要に応じてassert追加する
-		var_export($result);
+/**
+ * getIdpUserid()のpersistent-idテスト
+ *
+ * @return void
+ */
+	public function testGetIdpUseridPersistent() {
+		//テストデータ
+		CakeSession::write('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID,
+			'test103@persistent-id@idp.e-rad.local');
+
+		//テストアクション実行
+		$this->_testGetAction(
+			'/test_auth_shibboleth/test_auth_shibboleth_component/index',
+			array('method' => 'assertNotEmpty'), null, 'view'
+		);
+		$pattern = '/' . preg_quote('Controller/Component/TestAuthShibbolethComponent', '/') . '/';
+		$this->assertRegExp($pattern, $this->view);
+
+		//テスト実行
+		/* @see AuthShibbolethComponent::getIdpUserid() */
+		$result = $this->controller->AuthShibboleth->getIdpUserid();
+		$this->assertNotEmpty($result, 'persistent-idセッション設定のため、値が返ってくる想定');
+	}
+
+/**
+ * getIdpUserid()の空テスト
+ *
+ * @return void
+ */
+	public function testGetIdpUseridEmpty() {
+		//テストアクション実行
+		$this->_testGetAction(
+			'/test_auth_shibboleth/test_auth_shibboleth_component/index',
+			array('method' => 'assertNotEmpty'), null, 'view'
+		);
+		$pattern = '/' . preg_quote('Controller/Component/TestAuthShibbolethComponent', '/') . '/';
+		$this->assertRegExp($pattern, $this->view);
+
+		//テスト実行
+		$result = $this->controller->AuthShibboleth->getIdpUserid();
+		$this->assertEmpty($result, 'セッション未設定のため、空の想定');
 	}
 
 }
