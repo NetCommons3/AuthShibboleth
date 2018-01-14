@@ -99,7 +99,7 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
  *
  * @return void
  */
-	public function testGetIdpUseridPersistent() {
+	public function testGetIdpUseridPersistentId() {
 		//テストデータ
 		CakeSession::write('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID,
 			'test103@persistent-id@idp.e-rad.local');
