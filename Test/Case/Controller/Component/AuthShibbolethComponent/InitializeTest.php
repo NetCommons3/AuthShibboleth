@@ -61,6 +61,7 @@ class AuthShibbolethComponentInitializeTest extends AuthShibbolethControllerTest
  * initialize()のテスト
  *
  * @return void
+ * @see AuthShibbolethComponent::initialize()
  */
 	public function testInitialize() {
 		//テストコントローラ生成
@@ -78,10 +79,6 @@ class AuthShibbolethComponentInitializeTest extends AuthShibbolethControllerTest
 		//チェック
 		$pattern = '/' . preg_quote('Controller/Component/TestAuthShibbolethComponent/index', '/') . '/';
 		$this->assertRegExp($pattern, $this->view);
-
-		//TODO:必要に応じてassert追加する
-		//var_export($this->view);
-
 	}
 
 }
