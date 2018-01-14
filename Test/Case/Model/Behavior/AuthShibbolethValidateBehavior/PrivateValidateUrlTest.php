@@ -39,7 +39,7 @@ class AuthShibbolethValidateBehaviorPrivateValidateUrlTest extends AuthShibbolet
  *
  * @var string
  */
-	public $_testModelAlias = 'auth_shibboleth';
+	protected $_testModelAlias = null;
 
 /**
  * setUp method
