@@ -42,6 +42,7 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
  * @return void
  */
 	public function setUp() {
+
 		parent::setUp();
 
 		//テストプラグインのロード
@@ -52,6 +53,7 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
 		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent', array(
 			'components' => array('Session' => '')
 		));
+		CakeSession::destroy();
 
 		//ログイン
 		TestAuthGeneral::login($this);
