@@ -42,7 +42,6 @@ class AuthShibbolethComponentGetIdpUseridTest extends AuthShibbolethControllerTe
  * @return void
  */
 	public function setUp() {
-
 		parent::setUp();
 
 		//テストプラグインのロード
