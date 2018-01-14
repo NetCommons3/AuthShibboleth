@@ -24,7 +24,9 @@ class AuthShibbolethSettingComponentEditTest extends AuthShibbolethControllerTes
  *
  * @var array
  */
-	public $fixtures = array();
+	public $fixtures = array(
+		'plugin.auth_shibboleth.site_setting4_auth_shibboleth',
+	);
 
 /**
  * Plugin name
@@ -58,11 +60,11 @@ class AuthShibbolethSettingComponentEditTest extends AuthShibbolethControllerTes
 	}
 
 /**
- * edit()のテスト
+ * edit()のGetテスト
  *
  * @return void
  */
-	public function testEdit() {
+	public function testEditGet() {
 		//テストコントローラ生成
 		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethSettingComponent');
 
@@ -78,10 +80,13 @@ class AuthShibbolethSettingComponentEditTest extends AuthShibbolethControllerTes
 		$this->assertRegExp($pattern, $this->view);
 
 		//テスト実行
+		/* @see AuthShibbolethSettingComponent::edit() */
 		$this->controller->AuthShibbolethSetting->edit();
 
-		//TODO:必要に応じてassert追加する
-		//var_export($this->controller->viewVars);
+		// チェック
+		//var_export($this->controller->request->data['SiteSetting']);
+		$this->assertNotEmpty($this->controller->request->data['SiteSetting'],
+			'フィクスチャーでsite_settingにデータ登録しているため、値がセットされている想定');
 	}
 
 }
