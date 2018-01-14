@@ -80,7 +80,7 @@ class AuthShibbolethComponentInitializeTest extends AuthShibbolethControllerTest
 		$this->assertRegExp($pattern, $this->view);
 
 		//TODO:必要に応じてassert追加する
-		var_export($this->view);
+		//var_export($this->view);
 
 	}
 

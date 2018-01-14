@@ -81,7 +81,7 @@ class AuthShibbolethComponentIsShibEptidTest extends AuthShibbolethControllerTes
 		$result = $this->controller->AuthShibboleth->isShibEptid();
 
 		//TODO:必要に応じてassert追加する
-		var_export($result);
+		//var_export($result);
 	}
 
 }

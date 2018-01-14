@@ -81,7 +81,7 @@ class AuthShibbolethSettingComponentEditTest extends AuthShibbolethControllerTes
 		$this->controller->AuthShibbolethSetting->edit();
 
 		//TODO:必要に応じてassert追加する
-		var_export($this->controller->viewVars);
+		//var_export($this->controller->viewVars);
 	}
 
 }
