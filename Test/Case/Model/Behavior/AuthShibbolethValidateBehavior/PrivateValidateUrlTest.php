@@ -35,6 +35,13 @@ class AuthShibbolethValidateBehaviorPrivateValidateUrlTest extends AuthShibbolet
 	public $plugin = 'auth_shibboleth';
 
 /**
+ * Test model alias
+ *
+ * @var string
+ */
+	public $_testModelAlias = 'auth_shibboleth';
+
+/**
  * setUp method
  *
  * @return void
@@ -45,6 +52,7 @@ class AuthShibbolethValidateBehaviorPrivateValidateUrlTest extends AuthShibbolet
 		//テストプラグインのロード
 		NetCommonsCakeTestCase::loadTestPlugin($this, 'AuthShibboleth', 'TestAuthShibboleth');
 		$this->TestModel = ClassRegistry::init('TestAuthShibboleth.TestAuthShibbolethValidateBehaviorPrivateModel');
+		$this->_testModelAlias = $this->TestModel->alias;
 	}
 
 /**
@@ -60,11 +68,11 @@ class AuthShibbolethValidateBehaviorPrivateValidateUrlTest extends AuthShibbolet
 		$key = 'AuthShibboleth.wayf_URL';
 		$result['空テスト']['data'] = null;
 		$result['空テスト']['key'] = null;
-		$result['空value']['data'][$this->TestModel->alias][$key][0]['value'] = '';
-		$result['空value']['data'][$this->TestModel->alias][$key][0]['language_id'] = 0;
+		$result['空value']['data'][$this->_testModelAlias][$key][0]['value'] = '';
+		$result['空value']['data'][$this->_testModelAlias][$key][0]['language_id'] = 0;
 		$result['空value']['key'] = $key;
-		$result['正常テスト']['data'][$this->TestModel->alias][$key][0]['value'] = 'https://example.com/';
-		$result['正常テスト']['data'][$this->TestModel->alias][$key][0]['language_id'] = 0;
+		$result['正常テスト']['data'][$this->_testModelAlias][$key][0]['value'] = 'https://example.com/';
+		$result['正常テスト']['data'][$this->_testModelAlias][$key][0]['language_id'] = 0;
 		$result['正常テスト']['key'] = $key;
 
 		return $result;
