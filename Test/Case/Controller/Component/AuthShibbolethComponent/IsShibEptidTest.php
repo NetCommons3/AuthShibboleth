@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('AuthShibbolethControllerTestCase', 'AuthShibboleth.TestSuite');
+App::uses('AuthShibbolethComponentTestCase', 'AuthShibboleth.TestSuite');
 App::uses('AuthShibbolethComponent', 'AuthShibboleth.Controller/Component');
 
 /**
@@ -18,7 +18,7 @@ App::uses('AuthShibbolethComponent', 'AuthShibboleth.Controller/Component');
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Test\Case\Controller\Component\AuthShibbolethComponent
  */
-class AuthShibbolethComponentIsShibEptidTest extends AuthShibbolethControllerTestCase {
+class AuthShibbolethComponentIsShibEptidTest extends AuthShibbolethComponentTestCase {
 
 /**
  * Fixtures

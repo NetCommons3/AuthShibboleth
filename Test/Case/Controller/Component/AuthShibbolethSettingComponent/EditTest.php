@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('AuthShibbolethControllerTestCase', 'AuthShibboleth.TestSuite');
+App::uses('AuthShibbolethComponentTestCase', 'AuthShibboleth.TestSuite');
 
 /**
  * AuthShibbolethSettingComponent::edit()のテスト
@@ -17,7 +17,7 @@ App::uses('AuthShibbolethControllerTestCase', 'AuthShibboleth.TestSuite');
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Test\Case\Controller\Component\AuthShibbolethSettingComponent
  */
-class AuthShibbolethSettingComponentEditTest extends AuthShibbolethControllerTestCase {
+class AuthShibbolethSettingComponentEditTest extends AuthShibbolethComponentTestCase {
 
 /**
  * Fixtures
@@ -88,5 +88,35 @@ class AuthShibbolethSettingComponentEditTest extends AuthShibbolethControllerTes
 		$this->assertNotEmpty($this->controller->request->data['SiteSetting'],
 			'フィクスチャーでsite_settingにデータ登録しているため、値がセットされている想定');
 	}
+
+	///**
+	// * edit()のPostテスト
+	// *
+	// * @return void
+	// */
+	//	public function testEditPost() {
+	//		//テストコントローラ生成
+	//		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethSettingComponent');
+	//
+	//		//ログイン
+	//		TestAuthGeneral::login($this);
+	//
+	//		//テストアクション実行
+	//		$this->_testPostAction(
+	//			'/test_auth_shibboleth/test_auth_shibboleth_setting_component/index',
+	//			array('method' => 'assertNotEmpty'), null, 'view'
+	//		);
+	//		$pattern = '/' . preg_quote('Controller/Component/TestAuthShibbolethSettingComponent', '/') . '/';
+	//		$this->assertRegExp($pattern, $this->view);
+	//
+	//		//テスト実行
+	//		/* @see AuthShibbolethSettingComponent::edit() */
+	//		$this->controller->AuthShibbolethSetting->edit();
+	//
+	//		// チェック
+	//		//var_export($this->controller->request->data['SiteSetting']);
+	//		$this->assertNotEmpty($this->controller->request->data['SiteSetting'],
+	//			'フィクスチャーでsite_settingにデータ登録しているため、値がセットされている想定');
+	//	}
 
 }

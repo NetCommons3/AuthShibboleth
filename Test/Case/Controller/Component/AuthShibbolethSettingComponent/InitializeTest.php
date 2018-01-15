@@ -8,7 +8,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('AuthShibbolethControllerTestCase', 'AuthShibboleth.TestSuite');
+App::uses('AuthShibbolethComponentTestCase', 'AuthShibboleth.TestSuite');
 
 /**
  * AuthShibbolethSettingComponent::initialize()のテスト
@@ -16,7 +16,7 @@ App::uses('AuthShibbolethControllerTestCase', 'AuthShibboleth.TestSuite');
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\AuthShibboleth\Test\Case\Controller\Component\AuthShibbolethSettingComponent
  */
-class AuthShibbolethSettingComponentInitializeTest extends AuthShibbolethControllerTestCase {
+class AuthShibbolethSettingComponentInitializeTest extends AuthShibbolethComponentTestCase {
 
 /**
  * Fixtures
