@@ -49,10 +49,10 @@ class AuthShibbolethComponentIsIdpUseridTest extends AuthShibbolethComponentTest
 
 		//テストコントローラ生成
 		/* @see NetCommonsControllerBaseTestCase::generateNc() でSessionをモックにしないための設定 */
-		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent', array(
-			'components' => array('Session' => '')
-		));
-		CakeSession::destroy();
+		$this->generate('TestAuthShibboleth.TestAuthShibbolethComponent', [
+			'Security',
+		]);
+		CakeSession::clear(false);
 
 		//ログイン
 		TestAuthGeneral::login($this);

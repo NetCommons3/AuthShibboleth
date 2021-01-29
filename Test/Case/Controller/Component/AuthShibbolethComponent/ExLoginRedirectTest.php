@@ -47,9 +47,10 @@ class AuthShibbolethComponentExLoginRedirectTest extends AuthShibbolethComponent
 
 		//テストコントローラ生成
 		/* @see NetCommonsControllerBaseTestCase::generateNc() でSessionをモックにしないための設定 */
-		$this->generateNc('TestAuthShibboleth.TestAuthShibbolethComponent', array(
-			'components' => array('Session' => '')
-		));
+		$this->generate('TestAuthShibboleth.TestAuthShibbolethComponent', [
+			'Security',
+		]);
+		CakeSession::clear(false);
 
 		//ログイン
 		TestAuthGeneral::login($this);
@@ -63,6 +64,7 @@ class AuthShibbolethComponentExLoginRedirectTest extends AuthShibbolethComponent
 	public function tearDown() {
 		//ログアウト
 		TestAuthGeneral::logout($this);
+		CakeSession::clear(false);
 
 		parent::tearDown();
 	}
@@ -73,6 +75,10 @@ class AuthShibbolethComponentExLoginRedirectTest extends AuthShibbolethComponent
  * @return void
  */
 	public function testExLoginRedirect() {
+		//テストデータ
+		CakeSession::write('AuthShibboleth.' . AuthShibbolethComponent::PERSISTENT_ID,
+			'test103@persistent-id@idp.e-rad.local');
+
 		//テストアクション実行
 		$this->_testGetAction(
 			'/test_auth_shibboleth/test_auth_shibboleth_component/index',

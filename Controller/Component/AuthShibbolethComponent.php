@@ -182,13 +182,19 @@ class AuthShibbolethComponent extends Component {
  * @throws UnauthorizedException
  */
 	public function saveUserMapping($userId) {
+		// IdPによる個人識別番号 取得
+		$idpUserid = $this->getIdpUserid();
+		if (!$idpUserid) {
+			throw new UnauthorizedException();
+		}
+
 		// IdPによる個人識別番号 で取得
-		$externalIdpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($this->getIdpUserid());
+		$externalIdpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($idpUserid);
 
 		// 外部ID連携 保存
 		$data = array(
 			'user_id' => $userId,
-			'idp_userid' => $this->getIdpUserid(),		// IdPによる個人識別番号
+			'idp_userid' => $idpUserid,		// IdPによる個人識別番号
 			'is_shib_eptid' => $this->isShibEptid(),	// ePTID(eduPersonTargetedID)かどうか
 			'status' => '2',			// 2:有効
 			// nc3版はscope消した（shibboleth時は空なので）
@@ -219,8 +225,14 @@ class AuthShibbolethComponent extends Component {
  * @throws UnauthorizedException
  */
 	public function exLoginRedirect() {
+		// IdPによる個人識別番号 取得
+		$idpUserid = $this->getIdpUserid();
+		if (!$idpUserid) {
+			return '';
+		}
+
 		// IdPによる個人識別番号 で取得
-		$idpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($this->getIdpUserid());
+		$idpUser = $this->_controller->ExternalIdpUser->findByIdpUserid($idpUserid);
 		if (! $idpUser) {
 			// 関連付けされていないなら「ログイン関連付け画面」へリダイレクト
 			return '/auth_shibboleth/auth_shibboleth/mapping';
